@@ -16,8 +16,8 @@ support
 - etc...
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
-Version : 1.0
-Release date: June 2002
+Version : 1.1
+Release date: June 2003
 Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWBot official web site and latest version: http://awbot.sourceforge.net
