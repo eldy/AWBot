@@ -484,7 +484,9 @@ sub Get_Page()
 		if ($url =~ /^(.*)\?(.*)$/) {
 			$url = $1;
 			my $postparams=$2;
-			$request = HTTP::Request->new(POST => "$url", $HTTPheader, $postparams );
+			$request = HTTP::Request->new(POST => "$url", $HTTPheader);
+            $request->content_type('application/x-www-form-urlencoded');
+ 			$request->content($postparams);
 		}
 		else {
 			$request = HTTP::Request->new(POST => "$url", $HTTPheader);
@@ -823,9 +825,10 @@ sub LoopOnActionArray {
 			while ($result eq 302 && $noinfiniteloop < 10) {
 				$noinfiniteloop++;
 				# Here $Location contains "/newdir/newpage.html"
-				$url =~ /^http(s|):\/\/([^\\\/]*)/i;
-				my $serverbase=$2;
-				$result=&Get_Page("GET","http$1://$serverbase$Location");
+#				$url =~ /^http(s|):\/\/([^\\\/]*)/i;
+#				my $serverbase=$2;
+#				$result=&Get_Page("GET","http$1://$serverbase$Location");
+                $result=&Get_Page("GET","$Location");
 			}	
 	
 			# Check result
