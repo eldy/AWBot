@@ -46,7 +46,8 @@ $DIR $PROG $Extension $BotName
 $DEBUG $DELAY $TIMEOUT $PrepareOnly $ExecuteOnly $Wait $MaxSize $STARTSESSION $NUMSESSION $NBSESSIONS
 $QueryString
 %AllowedActions
-$BASEENGINE $DSN $USERBASE $PASSWORDBASE $SERVER $USER $PASSWORD
+$BASEENGINE $DSN $USERBASE $PASSWORDBASE
+$SERVER $USER $PASSWORD $PROXYSERVER @HOSTSNOPROXY
 @PREACTIONS @POSTACTIONS
 @ActionsTypeInit @ActionsValueInit
 $NbOfUrlInit $NbOfAutoInit
@@ -90,6 +91,8 @@ $NUMSESSION=1;
 $NBSESSIONS=1;
 $DirLang=$DirConfig="";
 %AllowedActions=(AUTO=>1,GET=>1,POST=>1,CHECKYES=>1,CHECKNO=>1,VAR=>1,SEQUENCE=>1,SQL=>1,SCRIPT=>1,WRITETO=>1,WRITETOH=>1);
+
+@HOSTSNOPROXY = ("myhost1","myhost1.my.domain.name");
 
 
 
@@ -265,6 +268,7 @@ sub Read_Config_File
 			if ($line =~ /^SERVER\s*=\s*(.*)/)		{ $SERVER=eval($1); next; }
 			if ($line =~ /^USER\s*=\s*(.*)/)		{ $USER=eval($1); next; }
 			if ($line =~ /^PASSWORD\s*=\s*(.*)/)	{ $PASSWORD=eval($1); next; }
+			if ($line =~ /^PROXYSERVER\s*=\s*(.*)/)	{ $PROXYSERVER=eval($1); next; }
 			if ($line =~ /^LANG\s*=\s*(.*)/)		{ $Lang=eval($1); next; }
 			if ($line =~ /^(PARAM\d*)\s*=\s*(.*)/)	{ my $var = "$1"; $$var = eval($2); next; }
 		}
@@ -1054,9 +1058,14 @@ $HTTPcookie = HTTP::Cookies->new(file=>"cookies$$.dat");
 $HTTPua = LWP::UserAgent->new();
 if ($ID) { $HTTPua->agent("$BotName/$VERSION - Session $NUMSESSION (PID $$) - " . $HTTPua->agent); }
 else { $HTTPua->agent("$BotName/$VERSION-" . $HTTPua->agent); }
-
 if ($TIMEOUT) { $HTTPua->timeout($TIMEOUT); }
 if ($MaxSize) { $HTTPua->max_size($MaxSize); }
+if ($PROXYSERVER ne "") {
+	# set proxy for access to external sites
+	$HTTPua->proxy(["http","https"],$PROXYSERVER);
+	# avoid proxy for these hosts
+	$HTTPua->no_proxy(@HOSTSNOPROXY);
+}
 
 
 #----------------------
