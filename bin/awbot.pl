@@ -226,7 +226,7 @@ sub Read_Config_File
 print "xxxxxxxxxxxxx $DIR";
 	# Open file
 	my $openok=0;
-	foreach my $dir ("","$DIR/conf","./conf","/etc/opt/awbot","/etc/awbot","/etc","/usr/local/etc/awbot") {
+	foreach my $dir ("","$DIR","$DIR/conf","./conf","/etc/opt/awbot","/etc/awbot","/etc","/usr/local/etc/awbot") {
 		my $searchdir=$dir;
 		if (($searchdir ne "") && (!($searchdir =~ /\/$/)) && (!($searchdir =~ /\\$/)) ) { $searchdir .= "/"; }
 		if (open(CONFIG,"$searchdir$ConfigFile"))  { $DirConfig=$searchdir; $openok=1; last; }
