@@ -223,7 +223,7 @@ sub Read_Config_File
 	my $PREACTIONSPHASE=0;
 	my $ACTIONSPHASE=0;
 	my $POSTACTIONSPHASE=0;
-
+print "xxxxxxxxxxxxx $DIR";
 	# Open file
 	my $openok=0;
 	foreach my $dir ("","$DIR/conf","./conf","/etc/opt/awbot","/etc/awbot","/etc","/usr/local/etc/awbot") {
@@ -735,7 +735,7 @@ sub LoopOnActionArray {
 			my $text=$HTTPResponse;
 			my @newActionsType=();
 			my @newActionsValue=();
-			while ($text =~ /a href=([^\s\>]+)/) {
+			while ($text =~ /href=([^\s\>]+)/i) {
 				my $savurl=$1;
 				$text = $';
 				my $url=$savurl; $url =~ s/^[\'\"]//; $url =~ s/[\'\"]$//;

@@ -226,9 +226,12 @@ foreach my $num (1..$NbSessions) {
     if (! $pid) {
 		# child code
 		my $dirnamebot="$DIR";
-		if ($dirnamebot && $dirnamebot =~ /[\\\/]$/) { $dirnamebot.="/"; }
+		if ($dirnamebot) {
+			if ($dirnamebot !~ /[\\\/]$/) { $dirnamebot.="/"; }
+			$dirnamebot.="bin/";
+		}
 		$dirnamebot.="$botname.pl";
-		$command="$dirnamebot -config=\"$ConfigFile\" -startsession=".($StartSession)." -numsession=".($num+$StartSession-1)." -nbsessions=$NbSessions -silent -id=$IDLauncher";
+		$command="\"$dirnamebot\" -config=\"$ConfigFile\" -startsession=".($StartSession)." -numsession=".($num+$StartSession-1)." -nbsessions=$NbSessions -silent -id=$IDLauncher";
 		if ($PrepareOnce) { $command.=" -executeonly"; }
 		if ($Delay)  { $command.=" -delay=$Delay"; }
 		if ($Server) { $command.=" -server=$Server"; }
