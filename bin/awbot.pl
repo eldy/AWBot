@@ -31,8 +31,8 @@ use HTTP::Request;
 # Defines
 #-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
-my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="1.1 (build $REVISION)";
+$REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
+$VERSION="1.1 (build $REVISION)";
 
 my $DEBUGFORCED=0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 my $nowtime = my $nowweekofmonth = my $nowdaymod = my $nowsmallyear = 0;
@@ -1060,7 +1060,7 @@ if ($ID) { $HTTPua->agent("$BotName/$VERSION - Session $NUMSESSION (PID $$) - " 
 else { $HTTPua->agent("$BotName/$VERSION-" . $HTTPua->agent); }
 if ($TIMEOUT) { $HTTPua->timeout($TIMEOUT); }
 if ($MaxSize) { $HTTPua->max_size($MaxSize); }
-if ($PROXYSERVER ne "") {
+if ($PROXYSERVER) {
 	# set proxy for access to external sites
 	$HTTPua->proxy(["http","https"],$PROXYSERVER);
 	# avoid proxy for these hosts
