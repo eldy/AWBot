@@ -127,6 +127,26 @@ sub error {
 }
 
 
+#------------------------------------------------------------------------------
+# Function:		Write a warning message
+# Parameters:	$message
+# Input:		$WarningMessage %HTMLOutput
+# Output:		None
+# Return:		None
+#------------------------------------------------------------------------------
+sub warning {
+	my $messagestring=shift;
+	if ($Debug) { debug("$messagestring",1); }
+	if (scalar keys %HTMLOutput) {
+		$messagestring =~ s/\n/\<br\>/g;
+		print "$messagestring<br>\n";
+	}
+	else {
+		print "$messagestring\n";
+	}
+}
+
+
 #-----------------------------------------------------------------------------
 # Function:     Print an debug message if debug_level is debug asked
 # Parameters:	string_message [debug_level]
@@ -202,8 +222,10 @@ sub Read_Language_Data {
 				$_ =~ s/^\s+//; $_ =~ s/\s+$//;
 				my @fields=split(/=/,$_,2);
 				#print "A $fields[0] $fields[1] A\n";
-				debug("Load message file $fields[0] with $fields[1]",4);
-				$Message{$fields[0]} = eval($fields[1]);
+				if ($fields[0]) {
+					debug("Load message for $fields[0] with $fields[1]",4);
+					$Message{$fields[0]} = eval($fields[1]);
+				}
 			}
 		}
 	}
