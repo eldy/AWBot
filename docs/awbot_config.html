@@ -43,7 +43,7 @@ All lines starting with "#" are comments. All other lines must start with one of
 explained in this page.<br>
 <i>
 
-<form><textarea ROWS="30" cols="170" class=CTextAreaConf>
+<form><textarea ROWS="30" cols="110" class=CTextAreaConf>
 
 # AWBot 1.0 Config file
 #-----------------------------------------------------------------------------
@@ -69,15 +69,15 @@ explained in this page.<br>
 # Examples:
 #  PASSWORD=$USER
 #-----------------------------------------------------------------------------
-OUTPUTDIR = "./output"		# Directory where to store output file(s)
-SERVER = "www.mysite.com"	# Domain name of server to test (www.mysite.com)
-USER = "test"				# If your web application require an authentication, this is the login that awbot will use
-PASSWORD = "test"			# If your web application require an authentication, this is the password that awbot will use
-BOTNAME = "AWBot"			# String value to force bot name used in the user agent string
-DELAY = 0					# Delay beetween each HTTP request (-1 wait a key, 0 no delay, n number of seconds)
-MAXSIZE = 0					# Maximum size of HTTP response (0 = no limit)
-TIMEOUT = 120				# Timeout (when waiting for a server response after sending a request)
-LANG = "fr"					# Choose output language
+OUTPUTDIR = "./output"      # Directory where to store output file(s)
+SERVER = "www.mysite.com"   # Domain name of server to test (www.mysite.com)
+USER = "test"               # If your web application require an authentication, this is the login that awbot will use
+PASSWORD = "test"           # If your web application require an authentication, this is the password that awbot will use
+BOTNAME = "AWBot"           # String value to force bot name used in the user agent string
+DELAY = 0                   # Delay beetween each HTTP request (-1 wait a key, 0 no delay, n number of seconds)
+MAXSIZE = 0                 # Maximum size of HTTP response (0 = no limit)
+TIMEOUT = 120               # Timeout (when waiting for a server response after sending a request)
+LANG = "fr"                 # Choose output language
 
 
 
@@ -89,10 +89,10 @@ LANG = "fr"					# Choose output language
 #  BASEENGINE="mysql"
 #  USERBASE=($USER eq "toto"?"titi":$USER)
 #-----------------------------------------------------------------------------
-BASEENGINE = "Oracle"			# Here is the name of the perl DBD driver (mysql, ODBC, Oracle, Sybase...)
-DSN = "mybase"					# Database name
-USERBASE = "myuser"				# Database login
-PASSWORDBASE = "mypassword"		# Database password
+BASEENGINE = "Oracle"           # Here is the name of the perl DBD driver (mysql, ODBC, Oracle, Sybase...)
+DSN = "mybase"                  # Database name
+USERBASE = "myuser"             # Database login
+PASSWORDBASE = "mypassword"     # Database password
 
 
 
@@ -131,11 +131,11 @@ PARAM1 = 1
 # LIST OF ORDERED URLS TO TEST
 #-----------------------------------------------------------------------------
 # Use the following format:
-#  GET		To get an HTML page (using GET HTTP method, like HTML links)
-#  POST		To get an HTML page (using POST HTTP method, like HTML forms)
-#  CHECKYES	To check if string is found in last response (using POSIX regex)
-#  CHECKNO	To check if a string is not found in last response (using POSIX regex)
-#  VAR		To extract a parameter from last response (using POSIX regex)
+#  GET      To get an HTML page (using GET HTTP method, like HTML links)
+#  POST     To get an HTML page (using POST HTTP method, like HTML forms)
+#  CHECKYES To check if string is found in last response (using POSIX regex)
+#  CHECKNO  To check if a string is not found in last response (using POSIX regex)
+#  VAR      To extract a parameter from last response (using POSIX regex)
 #  SEQUENCE To set a database sequence to a value (see examples, for Oracle only)
 #  SQL      To delete/insert some records in the database (see examples)
 #  SCRIPT   To launch an external script
@@ -145,11 +145,11 @@ PARAM1 = 1
 #           links on n level
 #
 # Examples:
-#  GET		"http://$SERVER/mypage.html?x=y&v=w"
-#  POST		"http://$SERVER/mypage.html?x=y&v=w"
-#  CHECKYES	"xxx"
-#  CHECKNO	"eee"
-#  VAR		"VARNAME:idvar=(\d)"
+#  GET      "http://$SERVER/mypage.html?x=y&v=w"
+#  POST     "http://$SERVER/mypage.html?x=y&v=w"
+#  CHECKYES "xxx"
+#  CHECKNO  "eee"
+#  VAR      "VARNAME:idvar=(\d)"
 #  AUTO     1
 #  SEQUENCE "myseq" $PARAM3+1
 #  SQL      "delete from customers"
@@ -158,6 +158,7 @@ PARAM1 = 1
 #  WRITETOH "myfile.http"
 #-----------------------------------------------------------------------------
 <ACTIONS>
+GET "http://$SERVER/"
 </ACTIONS>
 
 
@@ -192,13 +193,13 @@ PARAM1 = 1
 <ul>
 <li><a href="#DATABASE">DATABASE</a>
 <li><a href="#DSN">DSN</a>
-<li><a href="#USEBASE">USERBASE</a>
+<li><a href="#USERBASE">USERBASE</a>
 <li><a href="#PASSWORDBASE">PASSWORDBASE</a>
 </ul>
 
 <br><b>OTHER PARAMETERS</b><br>
 <ul>
-<li><a href="#PARAMx">PARAMdd</a>
+<li><a href="#PARAMdd">PARAMdd</a>
 </ul>
 
 <a name="BEFORE"><br><b>LIST OF ACTIONS TO EXECUTE BEFORE A TEST</b><br></a>
@@ -208,7 +209,7 @@ PARAM1 = 1
 <li><a href="#SCRIPT">SCRIPT</a>
 </ul>
 
-<a name="ACTIONS"><br><b> LIST OF ORDERED URLS TO TEST</b><br></a>
+<a name="ACTIONS"><br><b>LIST OF URLS TO TEST</b><br></a>
 <ul>
 <li><a href="#GET">GET</a>
 <li><a href="#POST">POST</a>
@@ -229,7 +230,12 @@ PARAM1 = 1
 <br>
 
 
-<br><br><hr>
+<br><br>
+
+
+<br><a name="INIT"></a><br>
+<font size=3 color=#665544><b>INIT PARAMETERS</b></font><br>
+<hr>
 
 <a name="OUTPUTDIR"><b>OUTPUTDIR</b></a><br>
 <b>Version : </b>1.0 +<br>
@@ -241,7 +247,7 @@ OUTPUTDIR="./myoutput"<br>
 This directive contains the name of directory where AWBot will<br>
 store all output files (results of tests).<br>
 
-<br><br><hr>
+<br><hr>
 
 <a name="SERVER"><b>SERVER</b></a><br>
 <b>Version : </b>1.0 +<br>
@@ -256,7 +262,7 @@ This directive contains the name of server to test.<br>
 Note that this directive will be ignored if server name to test is provided on command line
 with -server option when launching AWBot.<br>
 
-<br><br><hr>
+<br><hr>
 
 <a name="USER"><b>USER</b></a><br>
 <b>Version : </b>1.0 +<br>
@@ -269,8 +275,7 @@ This directive contains the name of the user to use to access pages that require
 Note that this directive will be overwrited if user is provided on command line
 with -user option when launching AWBot.<br>
 
-
-<br><br><hr>
+<br><hr>
 
 <a name="PASSWORD"><b>PASSWORD</b></a><br>
 <b>Version : </b>1.0 +<br>
@@ -284,7 +289,7 @@ This directive contains the name of the password to use to access pages that req
 Note that this directive will be overwrited if password is provided on command line
 with -password option when launching AWBot.<br>
 
-<br><br><hr>
+<br><hr>
 
 <a name="BOTNAME"><b>BOTNAME</b></a><br>
 <b>Version : </b>1.0 +<br>
@@ -296,7 +301,7 @@ BOTNAME="AWBot"<br>
 This directive contains the name of the User Agent that AWBot will use as its browser name.<br>
 This data might only appear is the web server log file.<br>
 
-<br><br><hr>
+<br><hr>
 
 <a name="DELAY"><b>DELAY</b></a><br>
 <b>Version : </b>1.0 +<br>
@@ -315,7 +320,7 @@ Use this directive to give this time in number of seconds:<br>
 Note that this directive will be overwrited if delay is provided on command line
 with -delay option when launching AWBot.<br>
 
-<br><br><hr>
+<br><hr>
 
 <a name="MAXSIZE"><b>MAXSIZE</b></a><br>
 <b>Version : </b>1.0 +<br>
@@ -328,7 +333,7 @@ MAXSIZE=524288<br>
 This directive is rarely used. If you really need to "cut" a HTTP page to its first MAXSIZE octets,
 you can set this parameter. In most cases, use MAXSIZE=0 to always get there entire page.<br>
 
-<br><br><hr>
+<br><hr>
 
 <a name="TIMEOUT"><b>TIMEOUT</b></a><br>
 <b>Version : </b>1.0 +<br>
@@ -339,12 +344,236 @@ TIMEOUT=120<br>
 <b>Explanation : </b><br>
 This directive contains the time-out used when AWbot is waiting a page after requesting a page.<br>
 This is a number of seconds. Traditionnal browsers have a such time-out set between 120 and 300.<br>
+<br>
 
+<br><a name="DATABASE"></a><br>
+<font size=3 color=#665544><b>DATABASE PARAMETERS</b></font><br>
+<hr>
 
+<a name="DATABASE"><b>DATABASE</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+DATABASE=mysql<br>
+<b>Examples : </b><br>
+DATABASE=mysql<br>
+DATABASE=ODBC<br>
+DATABASE=Oracle<br>
+DATABASE=Sybase<br>
+<b>Explanation : </b><br>
+This directive contains the name of DBD modules you need to use if you want ot make direct database
+actions by the bot.<br>
+! Note that dbd and dbi perl modules are not enabled in bot by default. So if you need to use
+database features, don't forget to uncomment the line corresponding to your database in awbot.pl file
+and don't forget to install the dbd and dbi perl modules (if not available by default with your perl).<br>
+<i>
+#__START_OF_SGBD_SETUP<br>
+#use DBD::Oracle;<br>
+#use DBD::Sybase;<br>
+#use DBD::ODBC;<br>
+#use DBD::mysql;<br>
+#__END_OF_SGBD_SETUP<br>
+</i>
+
+<br><hr>
+
+<a name="DSN"><b>DSN</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+DSN=mydatabasename<br>
+<b>Examples : </b><br>
+DSN=test<br>
+<b>Explanation : </b><br>
+This parameter contains the name of the database you want to make direct requests on.<br>
+
+<br><hr>
+
+<a name="USERBASE"><b>USERBASE</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+USERBASE=user<br>
+<b>Examples : </b><br>
+USERBASE=john<br>
+<b>Explanation : </b><br>
+This parameter contains the database login used to connect to the database you want to make direct requests on.<br>
+
+<br><hr>
+
+<a name="PASSWORDBASE"><b>PASSWORDBASE</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+DSN=mypassword<br>
+<b>Examples : </b><br>
+DSN=gandalf<br>
+<b>Explanation : </b><br>
+This parameter contains the database password used to connect to the database you want to make direct requests on.<br>
+
+<br>
+
+<br><a name="INIT"></a><br>
+<font size=3 color=#665544><b>OTHER PARAMETERS</b></font><br>
+<hr>
+
+<a name="PARAMdd"><b>PARAMdd</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+PARAMdd=value<br>
+<b>Examples : </b><br>
+PARAM01=paris<br>
+PARAM02=houston<br>
+<b>Explanation : </b><br>
+This directive allows to define constant parameters that can be use
+in all other directives.<br>
+<br>
+
+<br><a name="INIT"></a><br>
+<font size=3 color=#665544><b>LIST OF URLS TO TEST</b></font><br>
+<hr>
+
+<a name="GET"><b>GET</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+GET "http://$SERVER/mypage.html?x=y&v=w"<br>
+<b>Examples : </b><br>
+GET "http://$SERVER/"<br>
+GET "http://$SERVER/cgi-bin/myscript.cgi?town=$PARAM01"<br>
+GET "http://$SERVER/customer_$CUSTID.php"<br>
+<b>Explanation : </b><br>
+Add a line with GET command to ask the bot to get page/url returned by server after a request 
+defined by the second parameter (using GET HTTP method, like HTML links).<br>
+<br>
+
+<br><hr>
+
+<a name="POST"><b>POST</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+GET "http://$SERVER/mypage.cgi?x=y&v=w"<br>
+<b>Examples : </b><br>
+GET "http://$SERVER/cgi-bin/sendmail.pl?email=jo@jomail.com&subject=hello%20from%20$PARAM02&text=how%20are%20you"<br>
+<b>Explanation : </b><br>
+Add a line with POST command to ask the bot to get page/url returned by server after a request
+defined by the second parameter (using POST HTTP method, like HTML forms).<br>
+Note that you declare forms parameter like you do for a GET (with "?x=y&v=w..."), the bot
+will convert them to send a HTTP request with the correct POST protocol.<br>
+<br>
+
+<br><hr>
+
+<a name="CHECKYES"><b>CHECKYES</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+CHECKYES "regex"<br>
+<b>Examples : </b><br>
+CHECKYES "welcome"<br>
+<b>Explanation : </b><br>
+The bot check in the last page/url response after a GET or POST command that the
+received HTML page contains a particular pattern in it.<br>
+You can use a required matching text or any regexp expression.<br>
+If value is not found the bot, will return an error and will stop the process (except if -nostopiferror
+was provided in command line when launching the bot).<br>
+The opposite of CHECKYES is CHECKNO<br>.
+<br>
+
+<br><hr>
+
+<a name="CHECKNO"><b>CHECKNO</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+CHECKNO "regex"<br>
+<b>Examples : </b><br>
+CHECKNO "error"<br>
+<b>Explanation : </b><br>
+The bot check in the last page/url response after a GET or POST command that the
+received HTML page does not contain a particular pattern in it.<br>
+You can use a required matching text or any regexp expression.<br>
+If value is found, the bot will return an error and will stop the process (except if -nostopiferror
+was provided in command line when launching the bot).<br>
+<br>
+
+<br><hr>
+
+<a name="VAR"><b>VAR</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+VAR	"VARNAME:idvar=(\d)"<br>
+<b>Examples : </b><br>
+VAR "CUSTID:your customer id is (\d+)"<br>
+<b>Explanation : </b><br>
+This command ask the bot to extract a dat in the last page/url receive HTML page, after a GET or POST command,
+and store the extracted data into a variable called CUSTID.<br>
+You can send reuse this value into any of following command using the '$CUSTID' variable.<br>
+To extract a particular value from a received HTML page you must provide after the ':', a string (or regexp
+pattern) that exists in this page and use a regex pattern between ( and ) to tell which value will be stored
+in the $CUSTID parameter.<br>
+<br>
+
+<br><hr>
+
+<a name="SEQUENCE"><b>SEQUENCE</b></a><br>
+<b>Version : </b>1.0 +<br>
+SEQUENCE "sequencename" value<br>
+<b>Examples : </b><br>
+SEQUENCE "myseq" $PARAM3+1<br>
+This command can only works for Oracle database. It sets a particular Oracle sequence to
+a particular value.<br>
+This command can only be used if the DBD perl module has been enabled in the bot.<br>
+
+<br><hr>
+
+<a name="SQL"><b>SQL</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+SQL "sqlrequest"<br>
+<b>Examples : </b><br>
+SCRIPT "DELETE FROM CUSTOMERS where ID=$CUSTID"<br>
+SCRIPT "INSERT INTO TOWN(name,id) values($PARAM01,$STARTSESSION)"<br>
+<b>Explanation : </b><br>
+When the bot meet this directive, it executes the SQL requests on the database defined
+by <a href="#DATABASE">DATABASE</a> and <a href="#DSN">DSN</a> parameters in DATABASE section.<br>
+Note that if you have several SQL commands in a config/test file, the bot will only connect once
+to the database.<br>
+This command can only be used if the DBD perl module has been enabled in the bot.<br>
+
+<br><hr>
+
+<a name="SCRIPT"><b>SCRIPT</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+SCRIPT "scriptname"<br>
+<b>Examples : </b><br>
+SCRIPT "/home/test/dummy.ksh"<br>
+<b>Explanation : </b><br>
+When the bot meet this directive, it runs the given external scripts.
+The bot waits the end of it before reading the next command and continue its process.<br>
+
+<br><hr>
+
+<a name="WRITETO"><b>WRITETO</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+WRITETO "filetowriteinto"<br>
+<b>Examples : </b><br>
+CHECKNO "snapshot.html"<br>
+<b>Explanation : </b><br>
+When the bot meet this directive, it writes the content of the last page/url response
+received after last GET or POST command into a file.<br>
+
+<br><hr>
+
+<a name="WRITETOH"><b>WRITETOH</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+WRITETOH "filetowriteinto"<br>
+<b>Examples : </b><br>
+WRITETOH "snapshot.http"<br>
+<b>Explanation : </b><br>
+When the bot meet this directive, it writes the content of the last page/url response with its
+HTTP header, received after last GET or POST command, into a file.<br>
 
 
 <!-- -------------------------------------------------------------------------------------- -->
 
+<br><br>
 <br><hr>
 
 <script language=javascript>

@@ -13,7 +13,7 @@ a:active	{ font: 14px verdana,arial; color: #008020; font-family: sans-serif; te
 a:hover		{ font: 14px verdana,arial; color: #008020; font-family: sans-serif; text-decoration: underline; }
 
 .CHead 			{ background-color: #20C090; }
-.CTextAreaConf	{ font: 11px verdana,arial; color: #202020; font-family: sans-serif; text-decoration: none; }
+.CTextAreaConf	{ font: 11px verdana,arial; color: #202020; font-family: courrier; text-decoration: none; }
 
 td.CFAQ		{ font: 14px verdana,arial; color: #000000; font-family: sans-serif; text-decoration: none; }
 .CProblem	{ font: 14px verdana,arial; color: #660000; font-family: sans-serif; text-decoration: none; }
