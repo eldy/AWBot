@@ -8,7 +8,7 @@
 #-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
-#use strict; no strict "refs";
+use strict; no strict "refs";
 $|=1;		# Force flush of disk writing
 
 use Time::HiRes qw( gettimeofday tv_interval );
@@ -41,7 +41,7 @@ my $nowsec = my $nowmin = my $nowhour = my $nowday = my $nowmonth = my $nowyear 
 use vars qw/
 $Location
 $starttime
-$ConfigFile $OutputFile
+$ConfigFile $OutputFile $OutputDir
 $DIR $PROG $Extension $BotName
 $DEBUG $DELAY $TIMEOUT $PrepareOnly $ExecuteOnly $Wait $MaxSize $STARTSESSION $NUMSESSION $NBSESSIONS
 $QueryString
@@ -53,7 +53,7 @@ $SERVER $USER $PASSWORD $PROXYSERVER @HOSTSNOPROXY
 $NbOfUrlInit $NbOfAutoInit
 %LISTESEQUENCEURSAVED
 $NbOfRequestsSent $NbOfRequestsReturnedSuccessfull
-$lasturlinerror
+$lasturlinerror $LastUrlBase
 $Debug $DebugResetDone
 $Verbose $Silent
 $ID $NoStopIfError
@@ -69,13 +69,11 @@ $delay $savseconds $savmicroseconds
 %ActionsDuration $ActionsMinDuration $ActionsMaxDuration
 %ActionsUp $ActionsMinUp $ActionsMaxUp
 %ActionsDown $ActionsMinDown $ActionsMaxDown
-$HTMLOutput
-%Message
+$PageCode %Message
 $Lang
 $DirLang $DirConfig
 /;
 $Lang="en";
-$HTMLOutput=0;
 $DebugResetDone=0;
 $ID=0;
 $NoStopIfError=0;
@@ -84,7 +82,6 @@ $Output=1;
 $MaxSize=0;
 $Debug=0;
 $NbOfUrlInit=0;
-$AutoExists=0;
 $Verbose=0; $Silent=0;
 $STARTSESSION=1;
 $NUMSESSION=1;
@@ -130,20 +127,14 @@ sub error {
 #------------------------------------------------------------------------------
 # Function:		Write a warning message
 # Parameters:	$message
-# Input:		$WarningMessage %HTMLOutput
+# Input:		$WarningMessage
 # Output:		None
 # Return:		None
 #------------------------------------------------------------------------------
 sub warning {
 	my $messagestring=shift;
 	if ($Debug) { debug("$messagestring",1); }
-	if (scalar keys %HTMLOutput) {
-		$messagestring =~ s/\n/\<br\>/g;
-		print "$messagestring<br>\n";
-	}
-	else {
-		print "$messagestring\n";
-	}
+	print "$messagestring\n";
 }
 
 
@@ -165,7 +156,6 @@ sub debug {
 	}
 	if ($level <= $Debug) {
 		my $debugstring = $_[0];
-		if ($HTMLOutput) { $debugstring =~ s/^ /&nbsp&nbsp /; $debugstring .= "<br>"; }
 		print showtime()." - DEBUG $level - $debugstring\n";
 	}
 }
@@ -179,8 +169,8 @@ sub debug {
 # Output var:	%Mesage hash array
 #-----------------------------------------------------------------------------
 sub Eval {
-	my $stringtoeval=shift||"";
-
+	my $stringtoeval=shift||'';
+	my $res=eval($stringtoeval);
 	return $res;
 }	
 	
@@ -455,8 +445,16 @@ sub restore_sequence {
 sub Get_Page()
 {
 	my $method = shift; 
-	my $url = shift; 
+	my $url = shift;
 	debug("Execute HTTP request (method=$method, url=$url)",3);
+
+	# Define absolute dir for URL
+	$LastUrlBase=$url;
+	$LastUrlBase=~s/^http(s|):\/\///;
+	$LastUrlBase=~s/([\\\/])[^\\\/]+$/$1/;
+	$LastUrlBase=~s/^[^\\\/]+([\\\/])/$1/;
+	debug("LastUrlBase=$LastUrlBase",3);
+
 	my $request; my $response;
 
 	# method=GET
@@ -523,7 +521,7 @@ sub showtime() {
 	$savseconds=$seconds;$savmicroseconds=$microseconds;
 	my ($nowsec,$nowmin,$nowhour,$nowday,$nowmonth,$nowyear,$nowwday,$nowyday,$nowisdst) = localtime($seconds);
 	$nowyear+=1900;++$nowmonth;
-	return sprintf("%04d/%02d/%02d-%02d:%02d:%02d:%03d",$nowyear,$nowmonth,$nowday,$nowhour,$nowmin,$nowsec,$microseconds/1000);	
+	return sprintf("%04d-%02d-%02d %02d:%02d:%02d:%03d",$nowyear,$nowmonth,$nowday,$nowhour,$nowmin,$nowsec,$microseconds/1000);	
 }
 
 #------------------------------------------------------------------------------
@@ -577,10 +575,10 @@ sub FormatRegex {
 sub WriteOutput {
 	my $stringtoprint=shift||"";
 	my $decal=shift||0;
-	my $ident="";
-	#foreach my $key (1..$decal) { $ident.=" "; }
-	print OUTPUTFILE "$ident$stringtoprint\n";
-	if ($Verbose) { print "$ident$stringtoprint\n" };
+	my $indent="";
+	#foreach my $key (1..$decal) { $indent.=" "; }
+	print OUTPUTFILE "$indent$stringtoprint\n";
+	if ($Verbose) { print "$indent$stringtoprint\n" };
 	return 0;
 }
 
@@ -593,7 +591,7 @@ sub WriteOutput {
 #--------------------------------------------------------------------
 sub WriteHTML {
 	my $htmlcontentstring=shift||"";
-	my $htmlfilename=shift||"${ConfigFile}".($ID?".$$":"").".lasterror.html"; $htmlfile =~ s/^.*[\\\/]+([^\\\/]+)$/$1/;
+	my $htmlfilename=shift||"${ConfigFile}".($ID?".$$":"").".lasterror.html"; $htmlfilename =~ s/^.*[\\\/]+([^\\\/]+)$/$1/;
 	open(HTMLFILE,">$OutputDir/$htmlfilename");
 	print HTMLFILE "$htmlcontentstring\n";
 	close HTMLFILE;
@@ -646,7 +644,7 @@ sub ExecutePrePostActions {
 		my ($seqname,$seqvalue)=split(/\s+/,$value);
  		$seqname=eval("$seqname");
  		$seqvalue=eval("$seqvalue");
-		$ret=set_sequence($seqname,$seqvalue);
+		my $ret=set_sequence($seqname,$seqvalue);
 		if ($ret) { 
 			&WriteOutput("---> Error: Failed to set sequence $seqname to $seqvalue");
 			return 1;
@@ -697,6 +695,7 @@ sub RunScript {
 	my $script=shift;
 	&debug("RunScript $script 2>&1",1);
 	my $output=`$script 2>&1`;
+	my $rc=0;
 	if ($! || ($?>>8)) {
 		$rc=($?>>8);
 	}
@@ -760,21 +759,21 @@ sub LoopOnActionArray {
 	
 			# Loop on each URL to search GET requests
 			my $text=$HTTPResponse;
-			my @newActionsType=();
-			my @newActionsValue=();
+			my @newActionsType=(''); my @newActionsValue=('');	# First elem will not be used
 			while ($text =~ /href=([^\s\>]+)/i) {
 				my $savurl=$1;
 				$text = $';
 				my $url=$savurl; $url =~ s/^[\'\"]//; $url =~ s/[\'\"]$//;
 				if ($url =~ /^\//) {
+					# An absolute link
 					$url="http://$SERVER$url"; 
 				}
 				else {
-					# TODO build url from relative path
-					$url="http://$SERVER/jsp/$url"; 
-					#$url="xxx$url";
+					# A relative link. $LastUrlBase is '/' or '/xxx/' or '/xxx/yyy/' ...
+					if ($LastUrlBase) { $url="http://${SERVER}${LastUrlBase}$url"; }
+					else { $url="http://${SERVER}/$url"; }
 				}
-				
+
 				&debug(" Add to AUTO list URL '$url'",3);
 				push @newActionsType, "GET";
 				push @newActionsValue, "\"$url\"";
@@ -785,7 +784,7 @@ sub LoopOnActionArray {
 			# Send new Array
 			LoopOnActionArray(\@newActionsType,\@newActionsValue,1,1);
 
-			#&WriteOutput("$datedebut AUTO END",$level);
+			&debug(" End of AUTO",3);
 			next;
 		}	
 	
@@ -856,6 +855,13 @@ sub LoopOnActionArray {
 			next;
 		}
 		
+		# Change delay value if action is DELAY
+		if ($ActionsTypeArray[$actionnb] =~ /delay/i) {
+			$DELAY=eval($ActionsValueArray[$actionnb]);
+			&debug(" DELAY has been changed to '$DELAY'",3);
+			next;
+		}
+
 		# Check last call if action is CHECKYES
 		if ($ActionsTypeArray[$actionnb] =~ /checkyes/i) {
 			$CheckYesTotal{$NbOfRequestsSent}++;
@@ -874,7 +880,7 @@ sub LoopOnActionArray {
 			}
 			next;
 		}
-	
+
 		# Check last call if action is CHECKNO
 		if ($ActionsTypeArray[$actionnb] =~ /checkno/i) {
 			$CheckNoTotal{$NbOfRequestsSent}++;
@@ -1159,8 +1165,9 @@ if (! $ExecuteOnly) {
 # SUMMARY
 #----------------------
 $NbOfRequestsReturnedSuccessfull=0;
-$RequestDuration=0;
-#foreach my $actionnb (1..(@ActionsTypeInit-1)) {
+my $RequestDuration=0;
+my $TotalCheckYesOk=0; my $TotalCheckYesTotal=0; my $TotalCheckNoOk=0; my $TotalCheckNoTotal=0;
+	
 foreach my $requestnb (1..$NbOfRequestsSent) {
 	if ($ActionsDuration{$requestnb} && $ActionsDuration{$requestnb} > 0) {
 		$NbOfRequestsReturnedSuccessfull++;
@@ -1178,15 +1185,14 @@ foreach my $requestnb (1..$NbOfRequestsSent) {
 &WriteOutput("Total requests sent: $NbOfRequestsSent ($NbOfRequestsReturnedSuccessfull answered)");
 if ($RequestDuration > 0) { &WriteOutput("Total requests duration: $RequestDuration ms"); }
 else { &WriteOutput("Total requests duration: -"); }
-if ($RequestDuration > 0) { &WriteOutput("Average requests response time: ".int($RequestDuration/($NbOfRequestsReturnedSuccessfull||1))." ms/request"); }
-else { &WriteOutput("Average requests response time: -"); }
-&WriteOutput("Total Check Yes: $TotalCheckYesOk/$TotalCheckYesTotal  No: $TotalCheckNoOk/$TotalCheckNoTotal");
-if ($ActionsMinDuration) { &WriteOutput("Faster request response time: URL ".sprintf("%3d",$ActionsMinDuration)." - ".sprintf("%4d",$ActionsDuration{$ActionsMinDuration})." ms"); }
-else { &WriteOutput("Faster request response time: -"); }
-if ($ActionsMaxDuration) { &WriteOutput("Slower request response time: URL ".sprintf("%3d",$ActionsMaxDuration)." - ".sprintf("%4d",$ActionsDuration{$ActionsMaxDuration})." ms"); }
-else { &WriteOutput("Slower request response time: -"); }
+if ($RequestDuration > 0) { &WriteOutput("Average request response time: ".int($RequestDuration/($NbOfRequestsReturnedSuccessfull||1))." ms/request"); }
+else { &WriteOutput("Average request response time: -"); }
+if ($ActionsMinDuration) { &WriteOutput("Faster  request response time: URL ".sprintf("%3d",$ActionsMinDuration)." - ".sprintf("%4d",$ActionsDuration{$ActionsMinDuration})." ms"); }
+else { &WriteOutput("Faster  request response time: -"); }
+if ($ActionsMaxDuration) { &WriteOutput("Slower  request response time: URL ".sprintf("%3d",$ActionsMaxDuration)." - ".sprintf("%4d",$ActionsDuration{$ActionsMaxDuration})." ms"); }
+else { &WriteOutput("Slower  request response time: -"); }
+&WriteOutput("Total Check (Successfull/Done):  CheckYes: $TotalCheckYesOk/$TotalCheckYesTotal  CheckNo: $TotalCheckNoOk/$TotalCheckNoTotal");
 my $cumul=0;
-#foreach my $requestnb (1..(@ActionsTypeInit-1)) {
 foreach my $requestnb (1..$NbOfRequestsSent) {
 	my $delay=$ActionsDuration{$requestnb};
 	if ($delay > 0) {
@@ -1194,7 +1200,7 @@ foreach my $requestnb (1..$NbOfRequestsSent) {
 		$cumul+=$ActionsDuration{$requestnb};
 		$urlresult.=sprintf("Duration: %4d ms - ",$delay);
 		$urlresult.=sprintf("Cumul: %4d ms - ",$cumul);
-		$urlresult.=sprintf("Check Yes:%2d /%2d No:%2d /%2d",$CheckYesOk{$requestnb},$CheckYesTotal{$requestnb},$CheckNoOk{$requestnb},$CheckNoTotal{$requestnb});
+		$urlresult.=sprintf("CheckYes: %2d / %2d CheckNo: %2d / %2d",$CheckYesOk{$requestnb},$CheckYesTotal{$requestnb},$CheckNoOk{$requestnb},$CheckNoTotal{$requestnb});
 		&WriteOutput($urlresult);
 	}
 	elsif ($delay < 0) {

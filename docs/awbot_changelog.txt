@@ -3,8 +3,17 @@ AWBot Changelog
 
 1.1
 
-Added:
+Fixes:
+None
+
+New features/improvements:
 - New parameter: PROXYSERVER
+- Added AUTO option.
+- Added possible use of DELAY option in ACTIONS section.
+- English by default in config file.
+
+Other/Documentation:
+- Updated documentation.
 
 
 
