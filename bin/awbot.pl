@@ -72,6 +72,7 @@ $delay $savseconds $savmicroseconds
 $PageCode %Message
 $Lang
 $DirLang $DirConfig
+$UseHTTPS
 /;
 $Lang="en";
 $DebugResetDone=0;
@@ -87,6 +88,7 @@ $STARTSESSION=1;
 $NUMSESSION=1;
 $NBSESSIONS=1;
 $DirLang=$DirConfig="";
+$UseHTTPS=0;
 %AllowedActions=(AUTO=>1,GET=>1,POST=>1,CHECKYES=>1,CHECKNO=>1,VAR=>1,SEQUENCE=>1,SQL=>1,SCRIPT=>1,WRITETO=>1,WRITETOH=>1);
 
 @HOSTSNOPROXY = ("myhost1","myhost1.my.domain.name");
@@ -451,6 +453,16 @@ sub Get_Page()
 	# Define absolute dir for URL
 	$LastUrlBase=$url;
 	$LastUrlBase=~s/^http(s|):\/\///;
+    if ($1 && ! $UseHTTPS) {    # We need https
+    	debug("Load SSL",3);
+        #use Crypt::SSLeay;
+        if (!eval ('require "Crypt/SSLeay.pm";')) {
+            print $@?"Error: $@":"Error: Need Perl module Crypt::SSLeay";
+            return 0;
+        }
+        #eval("use Crypt::SSLeay");
+        $UseHTTPS=1;
+    }
 	$LastUrlBase=~s/([\\\/])[^\\\/]+$/$1/;
 	$LastUrlBase=~s/^[^\\\/]+([\\\/])/$1/;
 	debug("LastUrlBase=$LastUrlBase",3);
@@ -811,9 +823,9 @@ sub LoopOnActionArray {
 			while ($result eq 302 && $noinfiniteloop < 10) {
 				$noinfiniteloop++;
 				# Here $Location contains "/newdir/newpage.html"
-				$url =~ /^http[s]:\/\/([^\\\/]*)/i;
-				my $serverbase=$1;
-				$result=&Get_Page("GET","http://$serverbase$Location");
+				$url =~ /^http(s|):\/\/([^\\\/]*)/i;
+				my $serverbase=$2;
+				$result=&Get_Page("GET","http$1://$serverbase$Location");
 			}	
 	
 			# Check result

@@ -7,6 +7,7 @@ Fixes:
 None
 
 New features/improvements:
+- Can test HTTPS web sites sending https requests.
 - New parameter: PROXYSERVER
 - Added AUTO option.
 - Added possible use of DELAY option in ACTIONS section.
