@@ -223,7 +223,7 @@ sub Read_Config_File
 	my $PREACTIONSPHASE=0;
 	my $ACTIONSPHASE=0;
 	my $POSTACTIONSPHASE=0;
-print "xxxxxxxxxxxxx $DIR";
+
 	# Open file
 	my $openok=0;
 	foreach my $dir ("","$DIR","$DIR/conf","./conf","/etc/opt/awbot","/etc/awbot","/etc","/usr/local/etc/awbot") {
