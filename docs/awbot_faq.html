@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta name="description" content="AWBot Documentation - FAQ page">
+<meta name="keywords" content="AWBot, faq, error, errors, frequently, asked, questions, support, help, problem, solution, troubleshooting">
+<meta name="robots" content="index,follow">
+<meta name="title" content="AWBot Documentation - FAQs">
+<title>AWBot Documentation - FAQs</title>
+<link rel="stylesheet" href="styles.css" type="text/css">
+<!-- $Revision$ - $Author$ - $Date$ -->
+</head>
+
+<body topmargin=10 leftmargin=5>
+
+
+<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+
+<!-- Large -->
+<tr style="font: 10pt arial,helvetica,verdana">
+<td class=CHead bgcolor=#9999cc align=center><a href="/"><img src="images/awbot_logo4.png" border=0></a></td>
+<td class=CHead bgcolor=#9999cc align=center>
+<br>
+<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWBot 1.0 Documentation</b></font><br>
+<br>
+</td>
+<td class=CHead bgcolor=#9999cc align=center>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<br><br><H1 style="font: 26px arial,helvetica,sanserif">Frequently Asked Questions + Troubleshooting</H1>
+
+
+<br>
+<u>ABOUT QUESTIONS:</u><br>
+<ul>
+FAQ-ABO100 <a href="#SERVERSOS">Which web servers or operating systems are supported ?</a><br>
+FAQ-ABO200 <a href="#LANG">Which languages are available ?</a><br>
+</ul>
+<br>
+
+<u>SETUP or ERROR QUESTIONS:</u><br>
+Here, you can find the most common questions and answers users have to install/setup AWBot.<br>
+<ul>
+FAQ-SET550 <a href="#CRONTAB">How to run AWBot frequently ?</a><br>
+</ul>
+<br>
+
+<u>COMMON SUPPORT QUESTIONS:</u><br>
+Here, you can find the most common questions and answers users have when using AWBot.<br>
+<ul>
+</ul>
+<br>
+
+<br>
+
+<hr>
+<br><br>
+<a name="SERVERSOS"></a><br>
+<b><u>FAQ-ABO100 : WHICH WEB SERVER OR OS ARE SUPPORTED ?</u></b><br>
+AWBot is just a particular Web Browser like IE or Netscape so it can test/works on all web servers.
+Because AWBot is in Perl, it can works on all Operating Systems.<br>
+Examples of used platforms (bold means 'tested by author', others were reported by AWBot users to work correctly) :<br>
+<table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+<u>OS:</u><br>
+<b>Windows NT 4.0</b>, <b>Windows 2000</b>, Windows Me, <b>Linux</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, ...<br>
+<u>Web/Wap/Proxy servers</u><br>
+<b>Apache</b>, <b>IIS 5.0</b>, WebStar, WebLogic, Squid, Roxen, IPlanet, IceCast, Zope, ...<br>
+<u>Perl interpreters:</u><br>
+<b>ActivePerl 5.6</b>, <b>Perl for unix 5.0</b><br>
+</td></tr></table>
+<br>
+
+<a name="LANG"></a><br>
+<b><u>FAQ-ABO200 : WHICH LANGUAGES ARE AVAILABLE ?</u></b><br>
+AWBot is only available in English.<br>
+<br>
+
+
+<hr><br>
+
+
+<a name="CRONTAB"></a><br>
+<b><u>FAQ-SET550 : HOW TO RUN AWBOT FREQUENTLY</u></b><br>
+<font class=CProblem>PROBLEM:</font> I want to run AWBot frequently to detect a response time decrease
+accross time. How can I do this ?<br>
+<font class=CSolution>SOLUTION:</font><br>
+<br>
+<u>With Windows</u>, you can use the internal task scheduler.
+The use of this tool is not an AWBot related problem, so please take a look at your Windows manual.
+Warning, if you use <i>"awbot.pl -config=myfile.conf"</i> in your scheduled task, you might
+experience problem of failing task. Try this instead<br>
+<i>"C:\WINNT\system32\CMD.EXE /C C:\[AWBot_path]\awbot.pl -config=myfile.conf"</i><br>
+or<br>
+<i>"C:\[perl_path]\perl.exe C:\[AWBot_path]\awbot.pl -config=myfile.conf"</i><br>
+A lot of other scheduler (sharewares/freewares) are very good.<br>
+<br>
+<u>With unix-like operating systems</u>, you can use the "<b>crontab</b>".<br>
+This is examples of lines you can add in the cron file (see your unix reference manual for cron) :<br>
+To run update every day at 04:00, use :<br>
+<i>0 4 * * * /opt/awbot/wwwroot/cgi-bin/awbot.pl -config=myfile.conf</i><br>
+To run update every hour, use :<br>
+<i>0 * * * * /opt/awbot/wwwroot/cgi-bin/awbot.pl -config=myfile.conf</i><br>
+<br>
+
+<br>
+
+<hr>
+<script language="javascript">
+	var lastmod = new Date(document.lastModified);
+	if (lastmod.getDate() > 0) {
+		if (lastmod.getDate()<10) zerod="0"
+		else zerod="";
+		if (lastmod.getMonth()<9) zerom="0"
+		else zerom=""
+		year2kok=lastmod.getYear();
+		if (year2kok<100) year2kok+=2000;
+		if ((year2kok>=100) && (year2kok < 1970)) year2kok+=1900;
+		document.writeln("Last revision: "+year2kok+"-"+zerom+(lastmod.getMonth()+1)+"-"+zerod+lastmod.getDate());
+	}
+</script>
+
+</body>
+</html>

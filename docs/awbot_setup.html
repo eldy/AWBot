@@ -1,0 +1,415 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta name="description" content="AWBot Documentation - Setup page">
+<meta name="keywords" content="AWBot, setup, config, install">
+<meta name="robots" content="index,follow">
+<meta name="title" content="AWBot Documentation - Setup page">
+<title>AWBot Documentation - Setup page</title>
+<link rel="stylesheet" href="styles.css" type="text/css">
+<!-- $Revision$ - $Author$ - $Date$ -->
+</head>
+
+<body topmargin=10 leftmargin=5>
+
+
+<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+
+<!-- Large -->
+<tr style="font: 10pt arial,helvetica,verdana">
+<td class=CHead bgcolor=#9999cc align=center><a href="/"><img src="images/awbot_logo4.png" border=0></a></td>
+<td class=CHead bgcolor=#9999cc align=center>
+<br>
+<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWBot 1.0 Documentation</b></font><br>
+<br>
+</td>
+<td class=CHead bgcolor=#9999cc align=center>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<br><br><H1 style="font: 26px arial,helvetica,sanserif">Install, Setup and Use AWBot</H1>
+
+AWBot common use is made in 4 steps:<br>
+<ul>
+<li><a href="#REQUIREMENTS">Requirements</a><br>
+<li><a href="#INSTALL">Create a test/config file</a><br>
+<li><a href="#RUN_BOT">Run AWBot</a><br>
+<li><a href="#ANALYZE_RESULTS">Analyze results</a><br>
+</ul>
+<br>
+
+<br><a name="REQUIREMENTS"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Requirements</u></H2></a>
+
+To use AWBot, you must have the following :<br>
+- A computer with a command line access (DOS, Korn Shell, ...)<br>
+- A perl interpreter working on this computer with the following Perl add-on modules :<br>
+* Time:HiRes<br>
+and if you need to make SQL requests to prepare your test:<br>
+* DBI<br>
+* DBD::YourSGBD (DBD::mysql, DBD::Oracle, DBD::Sybase, DBD::ODBC...)<br>
+<br>
+You can find all those free modules on the net.<br>
+<br>
+
+
+<br><br><a name="INSTALL"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Create a testconfig file</u></H2></a>
+
+After downloading and uncompressing AWBot distribution in a directory, you will fin dthe following
+files :<br>
+<table style="font-size: 12px" bgcolor="#EEEEEE" width=100%>
+<tr><td>./docs/*</td><td>HTML documentation files (Open index.html to get the table of contents)</td></tr>
+<tr><td>./bin/awbot.pl</td><td>This is AWBot main script</td></tr>
+<tr><td>./bin/awbotlaunch.pl</td><td>A launcher to launch several sessions of the bot</td></tr>
+<tr><td>./bin/awbot.test.conf</td><td>A sample of config file for using AWBot</td></tr>
+<tr><td>./bin/lang/*</td><td>Language files</td></tr>
+</table>
+<br>
+The next step is to create a test/config file:<br>
+<br>
+<b>1-</b> Copy <b>awbot.test.conf</b> into <b>awbot.mytestconfig.conf</b>.<br>
+<br>
+<b>2-</b> Edit the "INIT PARAMETERS" section of this config file with your own test setup:<br>
+* Change <a href="awbot_config.html#OUTPUTDIR">OUTPUTDIR</a> parameter to the value of the directory that will contains
+all tests results (AWBot output files) and create this directory (must have write permissions).<br>
+* Change <a href="awbot_config.html#SERVER">SERVER</a> parameter with value of your domain name. For example "www.mysite.com"<br>
+* If your site need a HTTP Basic authentication, use <a href="awbot_config.html#USER">USER</a> and <a href="awbot_config.html#PASSWORD">PASSWORD</a> to setup
+name and password of users used by the bot when authentication is required. You will be
+able to overwrite those parameters when you will launch several sessions of the bot using 
+a user/password file list (See later).<br>
+* Change <a href="awbot_config.html#DELAY">DELAY</a> parameter to set the time the bot will wait between each sendng of each URL.
+<br>
+<b>3-</b> Edit the "LIST OF ORDERED URLS TO TEST" section of this config file with your own test setup:<br>
+* You must add here the list of all URLs you want the bot to test.
+All URLs between "<ACTIONS>" and "</ACTIONS>" keywords will be sent in chronological order by the bot to the server.
+If your URL is a page you access from a link you must declare this url with the <a href="awbot_config.html#GET">GET</a> keyword,
+if your URL need to be requested from a HTML form, you must declare the link using the <a href="awbot_config.html#POST">POST</a> keywords
+(Fields are sent wth same URL syntax than <a href="awbot_config.html#GET">GET</a> requests). This is an example of this 2 URLs to test:
+<i>
+&lt;ACTIONS&gt;<br>
+GET "http://$SERVER/"<br>
+POST "http://$SERVER/cgi-bin/myformact?field1=xxx&field2=bbb<br>
+&lt;/ACTIONS&gt;<br>
+</i>
+Note that you can use in your testconfig file value of a parameter declared before using the "$" prefix to
+tell the bot to replace parameter with value ($SERVER will be replaced by "www.mysite.com"<br>
+<br>
+<b>4-</b> If you need to catch a parameter in the response of an URL, you can use the <a href="awbot_config.html#VAR">VAR</a> keyword
+and the POSIX regex syntax (like 'sed', 'awk' and a lot of Unix tools) to extract the value.<br>
+For example if you have in your testconfig file the following actions list:<br>
+<i>
+&lt;ACTIONS&gt;<br>
+GET "http://$SERVER/"<br>
+VAR "AUTHORNAME:Welcome on this page made by (\w+)"<br>
+GET "http://$SERVER/cgi-bin/info.pl?name=$AUTHORNALE"<br>
+&lt;/ACTIONS&gt;<br>
+</i>
+This means that the bot will first sent the request of the home page for $SERVER, wait the result,
+will search the string "Welcome on the Web Site <i>xxx</i>" and will store the value of <i>xxx</i>
+in the $AUTHORNAME variable. Then this variable $AUTHORNAME is used later for next url.<br>
+<br>
+<b>5-</b> In this same section you can also use the <a href="awbot_config.html#CHECKYES">CHECKYES</a> or
+<a href="awbot_config.html#CHECKNO">CHECKNO</a> keywords to ask the bot to check a particular
+keyword or not in the page returned by the request.<br>
+This is a simple example to start:<br>
+<i>
+&lt;ACTIONS&gt;<br>
+GET "http://$SERVER/"<br>
+CHECKYES "Welcome on this page"<br>
+CHECKNO "access forbidden"<br>
+&lt;/ACTIONS&gt;<br>
+</i>
+<br>
+<b>6-</b> See <a href="awbot_config.html">Directives of testconfig file</a> page for an explanation of all other available keywords.<br>
+<br>
+
+<b>7-</b> If you used <a href="awbot_config.html#SEQUENCE">SEQUENCE</a> or <a href="awbot_config.html#SQL">SQL</a> keywords, you must enable the Perl module for your SGBD. For this edit the awbot.pl file
+and uncomment the corresponding line after the "#__START_OF_SGBD_SETUP" line.<br>
+<br>
+
+Setup is finished. You can jump to the <a href="#RUN_BOT">Run AWBot</a> section.<br>
+<br>
+
+
+<br><br><a name="RUN_BOT"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Run AWBot</u></H2></a>
+
+<b>1-</b> You can first launch AWBot as a standalone process from the command line, like this :<br>
+<b><i>awbot.pl -config=awbot.mytestconfig.conf [otheroptions]</i></b><br>
+<br>
+<i>otheroptions</i> can be :<br>
+-server=xxx         Overwrite SERVER value of testconfig file<br>
+-user=xxx           Overwrite USER value of testconfig file<br>
+-password=xxx       Overwrite PASSWORD value of testconfig file<br>
+-delay=n            Overwrite DELAY value of testconfig file<br>
+-timeout=n          Overwrite TIMEOUT value of testconfig file<br>
+-nostopiferror      AWBot continues with next test when an error occurs<br>
+-verbose            Output file is also reported on screen<br>
+-debug=X            To add debug informations lesser than level X<br>
+<br>
+Results are stored in the output file <b><i>myconfigtest.conf.out</i></b> in the directory defined by
+the <a href="awbot_config.html#OUTPUTDIR">OUTPUTDIR</a> in the config file.<br>
+<br>
+<u>This is an example of outputfile you can get from a simple input file</u><br>
+<i>
+<table style="font-size: 12px"><tr><td>
+Input file<br>
+<form><textarea ROWS="30" cols="100" class=CTextAreaConf>
+# AWBot 1.0 Config file
+#-----------------------------------------------------------------------------
+# Note that everywhere in the file you can include :
+# __MONENV__  to ask AWBot to replace tag by value of environment variable MONENV
+# $MYVAR      to ask AWBot to replace tag by value of variable already defined
+#             in this same config file.
+# $STARTSESSION is defined to 1 if AWbot is ran as a standalone process,
+#                          to first session number if ran from AWBotlaunch.
+# $NUMSESSION   is defined to 1 if AWbot is ran as a standalone process,
+#                          to session number if ran from AWBotlaunch.
+# $NBSESSION    is defined to 1 if AWbot is ran as a standalone process,
+#                          to total number of sessions ran from AWBotlaunch.
+# You can also include perl code in values everywhere in the file.
+#-----------------------------------------------------------------------------
+
+
+
+# INIT PARAMETERS
+#-----------------------------------------------------------------------------
+# Put here all global parameters of your test configuration 
+#
+# Examples:
+#  PASSWORD=$USER
+#-----------------------------------------------------------------------------
+OUTPUTDIR = "d:/temp/output"		# Directory where to store output file(s)
+SERVER = "www.mysite.com"	# Domain name of server to test (www.mysite.com)
+USER = "test"				# If your web application require an authentication, this is the login that awbot will use
+PASSWORD = "test"			# If your web application require an authentication, this is the password that awbot will use
+BOTNAME = "AWBot"			# String value to force bot name used in the user agent string
+DELAY = 0					# Delay beetween each HTTP request (-1 wait a key, 0 no delay, n number of seconds)
+MAXSIZE = 0					# Maximum size of HTTP response (0 = no limit)
+TIMEOUT = 120				# Timeout (when waiting for a server response after sending a request)
+LANG = "fr"					# Choose output language
+
+
+
+# DATABASE PARAMETERS
+#-----------------------------------------------------------------------------
+# This section is required only if you added SQL request in your actions (see later)
+#
+# Examples:
+#  BASEENGINE="mysql"
+#  USERBASE=($USER eq "toto"?"titi":$USER)
+#-----------------------------------------------------------------------------
+BASEENGINE = "Oracle"			# Here is the name of the perl DBD driver (mysql, ODBC, Oracle, Sybase...)
+DSN = "mybase"					# Database name
+USERBASE = "myuser"				# Database login
+PASSWORDBASE = "mypassword"		# Database password
+
+
+
+# OTHER PARAMETERS
+#-----------------------------------------------------------------------------
+# You can add here as many parameters as you need for rest of config file.
+# Just use the following syntax (where n is a number between 1 and 99):
+#  PARAMn=value
+#  PARAMn="SELECT SQL request"
+#
+# Examples:
+#  PARAM1="select id from employee where name='$USER'"
+#  PARAM2=2000+$PARAM1
+#-----------------------------------------------------------------------------
+PARAM1 = 1
+
+
+
+# LIST OF ACTIONS TO EXECUTE BEFORE A TEST
+#-----------------------------------------------------------------------------
+# You can use one of the keyword:
+#  SEQUENCE To set a database sequence to a value (see examples, for Oracle only)
+#  SQL      To delete/insert some records in the database (see examples)
+#  SCRIPT   To launch an external script
+#
+# Examples:
+#  SEQUENCE "myseq" $PARAM3+1
+#  SQL      "delete from customers where id_customers < ".($PARAM1+$PARAM2)
+#  SCRIPT   "myscript.exe"
+#-----------------------------------------------------------------------------
+<PRE ACTIONS>
+</PRE ACTIONS>
+
+
+
+# LIST OF ORDERED URLS TO TEST
+#-----------------------------------------------------------------------------
+# Use the following format:
+#  GET		To get an HTML page (using GET HTTP method, like HTML links)
+#  POST		To get an HTML page (using POST HTTP method, like HTML forms)
+#  CHECKYES	To check if string is found in last response (using POSIX regex)
+#  CHECKNO	To check if a string is not found in last response (using POSIX regex)
+#  VAR		To extract a parameter from last response (using POSIX regex)
+#  SEQUENCE To set a database sequence to a value (see examples, for Oracle only)
+#  SQL      To delete/insert some records in the database (see examples)
+#  SCRIPT   To launch an external script
+#  WRITETO  Write last html response to a file
+#  WRITETOH Write last html response with its HTTP header to a file (full response)
+#  AUTO     To make a GET on all URLs find in last HTML response page and follow
+#           links on n level
+#
+# Examples:
+#  GET		"http://$SERVER/mypage.html?x=y&v=w"
+#  POST		"http://$SERVER/mypage.html?x=y&v=w"
+#  CHECKYES	"xxx"
+#  CHECKNO	"eee"
+#  VAR		"VARNAME:idvar=(\d)"
+#  AUTO     1
+#  SEQUENCE "myseq" $PARAM3+1
+#  SQL      "delete from customers"
+#  SCRIPT   "myscript.exe"
+#  WRITETO  "myfile.html"
+#  WRITETOH "myfile.http"
+#-----------------------------------------------------------------------------
+<ACTIONS>
+GET "http://$SERVER/"
+</ACTIONS>
+
+
+
+# LIST OF ACTIONS TO EXECUTE AFTER A TEST
+#-----------------------------------------------------------------------------
+# You can use same rules for LIST OF ACTIONS TO EXECUTE BEFORE A TEST.
+#-----------------------------------------------------------------------------
+<POST ACTIONS>
+</POST ACTIONS>
+</textarea></form>
+
+</td><td>
+
+Result/Output file<br>
+<form><textarea ROWS="30" cols="100" class=CTextAreaConf>
+TEST awbot 1.0 (build 1.3)
+---------------------------
+Config file: awbot.mytest.conf
+Server: chiensderace.com - User: test - Delay: 0
+Botname: AWBot - TimeOut: 120 - MaxSize: 0
+Date: 2002-07-03 23:12:51
+Process ID: 2328
+
+PRE ACTIONS
+---------------------------
+
+ACTIONS
+---------------------------
+2002/07/03-23:12:51:552 URL 1 - http://chiensderace.com/
+---> OK - 390 ms
+
+POST ACTIONS
+---------------------------
+
+SUMMARY
+---------------------------
+Total requests to do: 1
+Total requests sent: 1 (1 answered)
+Total requests duration: 390 ms
+Average requests response time: 390 ms/request
+Total Check Yes: 0/0  No: 0/0
+Faster request response time: URL   1 -  390 ms
+Slower request response time: URL   1 -  390 ms
+URL   1 - Duration:  390 ms - Cumul:  390 ms - Check Yes: 0 / 0 No: 0 / 0
+</textarea></form>
+
+</td></tr></table>
+
+</i>
+
+
+
+
+<br>
+<b>2-</b> You can use the bot launcher if you need several processes (for load benchmarks):<br>
+<b><i>awbotlaunch.pl -config=awbot.myconfigtest.conf -nbsessions=n</i></b><br>
+<br>
+With the awbotlauncher, you will get one output file for each sessions ran. Each output file will contains 
+the process ID of the session in its name. Example for -nbsessions=3, you will get 3 files:<br>
+<b><i>myconfigtest.conf.112.out</i></b><br>
+<b><i>myconfigtest.conf.113.out</i></b><br>
+<b><i>myconfigtest.conf.114.out</i></b><br>
+<br>
+Note 1: Don't forget that if you want to have results for n simultaneous sessions, you should set
+<a href="awbot_config.html#DELAY">DELAY</a> parameter to 0.<br>
+Note 2: Don't forget to purge the output directory before running a multi-session test if you
+want to obtain a directory with all files of last test.<br>
+<br>
+If you add the parameter <b>-authentication=@userpasswordfile</b> when you launch awbotlaunch,
+each session of the bot will be launched with a different value of <a href="awbot_config.html#USER">USER</a> and
+<a href="awbot_config.html#PASSWORD">PASSWORD</a> whatever are their value in config file.
+Values for USER/PASSWORD will be thoose found in file userpasswordfile. Format for this file is:<br>
+<table style="font-size: 12px" bgcolor="#EEEEEE" width=100%><tr><td>
+user1		password1<br>
+user2		password2<br>
+...<br>
+usern		passwordn<br>
+</td></tr></table>
+<br>
+<br>
+
+
+<br><br><a name="ANALYZE_RESULTS"><H2 style="font: 22px arial,helvetica,sanserif color: #606060"><u>Analyze Results</u></H2></a>
+
+Just open the output file.
+You will, for each request, time spent or the error message if URL failed.<br>
+<br>
+As you can see in the preceding example, the output file contains several parts:<br>
+The first part is summary of INIT parameters<br>
+<table style="font-size: 12px" bgcolor="#EEEEEE" width=100%><tr><td>
+TEST awbot 1.0 (build 1.3)<br>
+---------------------------<br>
+Config file: awbot.mytest.conf<br>
+Server: chiensderace.com - User: test - Delay: 0<br>
+Botname: AWBot - TimeOut: 120 - MaxSize: 0<br>
+Date: 2002-07-03 23:12:51<br>
+Process ID: 2328<br>
+</td></tr></table>
+<br>
+The part "PRE ACTIONS" and "POST ACTIONS" are results of all PRE and POST ACTIONS commands<br>
+<br>
+The part "ACTIONS" is the list of all URLs in your "&lt;ACTIONS&gt" section. You can see
+time when request was submitted with following format:<br>
+YYY/MM/DD-HH:MM:SS:ms (ms are milliseconds)<br>
+You have a line under each URL to test with time spent by server to send page. If a <a href="awbot_config.html#CHECKYES">CHECKYES</a> or
+<a href="awbot_config.html#CHECKNO">CHECKNO</a> check rule mad on response fails, you will also get an error message.<br>
+<br>
+The last part is a summary of response time, and checks for global test and each URLs.<br>
+<table style="font-size: 12px" bgcolor="#EEEEEE" width=100%><tr><td>
+SUMMARY<br>
+---------------------------<br>
+Total requests to do: 2<br>
+Total requests sent: 2 (2 answered)<br>
+Total requests duration: 6827 ms<br>
+Average requests response time: 3413 ms/request<br>
+Total Check Yes: 1/1  No: 0/0<br>
+Faster request response time: URL   2 - 2000 ms<br>
+Slower request response time: URL   1 - 4827 ms<br>
+URL   1 - Duration: 4827 ms - Cumul: 4827 ms - Check Yes: 1 / 1 No: 0 / 0<br>
+URL   2 - Duration: 2000 ms - Cumul: 6827 ms - Check Yes: 0 / 0 No: 0 / 0<br>
+</td></tr></table>
+<br>
+<br>
+<hr>
+
+<script language=javascript>
+	var lastmod = new Date(document.lastModified);
+	if (lastmod.getDate() > 0) {
+		if (lastmod.getDate()<10) zerod="0"
+		else zerod="";
+		if (lastmod.getMonth()<9) zerom="0"
+		else zerom=""
+		year2kok=lastmod.getYear();
+		if (year2kok<100) year2kok+=2000;
+		if ((year2kok>=100) && (year2kok < 1970)) year2kok+=1900;
+		document.writeln("Last revision: "+year2kok+"-"+zerom+(lastmod.getMonth()+1)+"-"+zerod+lastmod.getDate());
+	}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta name="description" content="AWBot Documentation - Configuration directives and parameters">
+<meta name="keywords" content="AWBot, awstat, config, parameters, configuration, conf">
+<meta name="robots" content="index,follow">
+<meta name="title" content="AWBot Documentation - Configuration directives and parameters">
+<title>AWBot Documentation - Configuration directives and parameters</title>
+<link rel="stylesheet" href="styles.css" type="text/css">
+<!-- $Revision$ - $Author$ - $Date$ -->
+</head>
+
+<body topmargin=10 leftmargin=5>
+
+
+<table style="font: 10pt arial,helvetica,verdana" cellpadding=0 cellspacing=0 border=0 bgcolor=#FFFFFF width=100%>
+
+<!-- Large -->
+<tr style="font: 10pt arial,helvetica,verdana">
+<td class=CHead align=center><a href="/"><img src="images/awbot_logo4.png" border=0></a></td>
+<td class=CHead bgcolor=#9999cc align=center>
+<br>
+<font style="font: 16pt arial,helvetica,sanserif" color=#EEEEFF><b>AWBot 1.0 Documentation</b></font><br>
+<br>
+</td>
+<td class=CHead bgcolor=#9999cc align=center>
+&nbsp;
+</td>
+</tr>
+
+</table>
+
+
+<br><br><H1 style="font: 26px arial,helvetica,sanserif">AWBot configuration directives/options for config/test file</H1>
+<!-- -------------------------------------------------------------------------------------- -->
+
+<br>AWbot need a config/test file to know what site and kind of action it should test. This page presents
+all available directives/options you can use to build your config file.<br>
+Note that one config/test file is provided with AWBot (awbot.test.conf).<br>
+<br>
+<u>First this is content of this sample file</u> :<br>
+All lines starting with "#" are comments. All other lines must start with one of the allowed keyword directives/options
+explained in this page.<br>
+<i>
+
+<form><textarea ROWS="30" cols="170" class=CTextAreaConf>
+
+# AWBot 1.0 Config file
+#-----------------------------------------------------------------------------
+# Note that everywhere in the file you can include :
+# __MONENV__  to ask AWBot to replace tag by value of environment variable MONENV
+# $MYVAR      to ask AWBot to replace tag by value of variable already defined
+#             in this same config file.
+# $STARTSESSION is defined to 1 if AWbot is ran as a standalone process,
+#                          to first session number if ran from AWBotlaunch.
+# $NUMSESSION   is defined to 1 if AWbot is ran as a standalone process,
+#                          to session number if ran from AWBotlaunch.
+# $NBSESSION    is defined to 1 if AWbot is ran as a standalone process,
+#                          to total number of sessions ran from AWBotlaunch.
+# You can also include perl code in values everywhere in the file.
+#-----------------------------------------------------------------------------
+
+
+
+# INIT PARAMETERS
+#-----------------------------------------------------------------------------
+# Put here all global parameters of your test configuration 
+#
+# Examples:
+#  PASSWORD=$USER
+#-----------------------------------------------------------------------------
+OUTPUTDIR = "./output"		# Directory where to store output file(s)
+SERVER = "www.mysite.com"	# Domain name of server to test (www.mysite.com)
+USER = "test"				# If your web application require an authentication, this is the login that awbot will use
+PASSWORD = "test"			# If your web application require an authentication, this is the password that awbot will use
+BOTNAME = "AWBot"			# String value to force bot name used in the user agent string
+DELAY = 0					# Delay beetween each HTTP request (-1 wait a key, 0 no delay, n number of seconds)
+MAXSIZE = 0					# Maximum size of HTTP response (0 = no limit)
+TIMEOUT = 120				# Timeout (when waiting for a server response after sending a request)
+LANG = "fr"					# Choose output language
+
+
+
+# DATABASE PARAMETERS
+#-----------------------------------------------------------------------------
+# This section is required only if you added SQL request in your actions (see later)
+#
+# Examples:
+#  BASEENGINE="mysql"
+#  USERBASE=($USER eq "toto"?"titi":$USER)
+#-----------------------------------------------------------------------------
+BASEENGINE = "Oracle"			# Here is the name of the perl DBD driver (mysql, ODBC, Oracle, Sybase...)
+DSN = "mybase"					# Database name
+USERBASE = "myuser"				# Database login
+PASSWORDBASE = "mypassword"		# Database password
+
+
+
+# OTHER PARAMETERS
+#-----------------------------------------------------------------------------
+# You can add here as many parameters as you need for rest of config file.
+# Just use the following syntax (where n is a number between 1 and 99):
+#  PARAMn=value
+#  PARAMn="SELECT SQL request"
+#
+# Examples:
+#  PARAM1="select id from employee where name='$USER'"
+#  PARAM2=2000+$PARAM1
+#-----------------------------------------------------------------------------
+PARAM1 = 1
+
+
+
+# LIST OF ACTIONS TO EXECUTE BEFORE A TEST
+#-----------------------------------------------------------------------------
+# You can use one of the keyword:
+#  SEQUENCE To set a database sequence to a value (see examples, for Oracle only)
+#  SQL      To delete/insert some records in the database (see examples)
+#  SCRIPT   To launch an external script
+#
+# Examples:
+#  SEQUENCE "myseq" $PARAM3+1
+#  SQL      "delete from customers where id_customers < ".($PARAM1+$PARAM2)
+#  SCRIPT   "myscript.exe"
+#-----------------------------------------------------------------------------
+<PRE ACTIONS>
+</PRE ACTIONS>
+
+
+
+# LIST OF ORDERED URLS TO TEST
+#-----------------------------------------------------------------------------
+# Use the following format:
+#  GET		To get an HTML page (using GET HTTP method, like HTML links)
+#  POST		To get an HTML page (using POST HTTP method, like HTML forms)
+#  CHECKYES	To check if string is found in last response (using POSIX regex)
+#  CHECKNO	To check if a string is not found in last response (using POSIX regex)
+#  VAR		To extract a parameter from last response (using POSIX regex)
+#  SEQUENCE To set a database sequence to a value (see examples, for Oracle only)
+#  SQL      To delete/insert some records in the database (see examples)
+#  SCRIPT   To launch an external script
+#  WRITETO  Write last html response to a file
+#  WRITETOH Write last html response with its HTTP header to a file (full response)
+#  AUTO     To make a GET on all URLs find in last HTML response page and follow
+#           links on n level
+#
+# Examples:
+#  GET		"http://$SERVER/mypage.html?x=y&v=w"
+#  POST		"http://$SERVER/mypage.html?x=y&v=w"
+#  CHECKYES	"xxx"
+#  CHECKNO	"eee"
+#  VAR		"VARNAME:idvar=(\d)"
+#  AUTO     1
+#  SEQUENCE "myseq" $PARAM3+1
+#  SQL      "delete from customers"
+#  SCRIPT   "myscript.exe"
+#  WRITETO  "myfile.html"
+#  WRITETOH "myfile.http"
+#-----------------------------------------------------------------------------
+<ACTIONS>
+</ACTIONS>
+
+
+
+# LIST OF ACTIONS TO EXECUTE AFTER A TEST
+#-----------------------------------------------------------------------------
+# You can use same rules for LIST OF ACTIONS TO EXECUTE BEFORE A TEST.
+#-----------------------------------------------------------------------------
+<POST ACTIONS>
+</POST ACTIONS>
+
+</textarea></form>
+
+</i>
+
+<br><br>
+<u>First this is an index of all directives available for each part of config/test file</u> :<br>
+<br>
+<br><b>INIT PARAMETERS</b><br>
+<ul>
+<li><a href="#OUTPUTDIR">OUTPUTDIR</a>
+<li><a href="#SERVER">SERVER</a>
+<li><a href="#USER">USER</a>
+<li><a href="#PASSWORD">PASSWORD</a>
+<li><a href="#BOTNAME">BOTNAME</a>
+<li><a href="#DELAY">DELAY</a>
+<li><a href="#MAXSIZE">MAXSIZE</a>
+<li><a href="#TIMEOUT">TIMEOUT</a>
+</ul>
+
+<br><b>DATABASE PARAMETERS (Required if you need pre-post SQL commands)</b><br>
+<ul>
+<li><a href="#DATABASE">DATABASE</a>
+<li><a href="#DSN">DSN</a>
+<li><a href="#USEBASE">USERBASE</a>
+<li><a href="#PASSWORDBASE">PASSWORDBASE</a>
+</ul>
+
+<br><b>OTHER PARAMETERS</b><br>
+<ul>
+<li><a href="#PARAMx">PARAMdd</a>
+</ul>
+
+<a name="BEFORE"><br><b>LIST OF ACTIONS TO EXECUTE BEFORE A TEST</b><br></a>
+<ul>
+<li><a href="#SEQUENCE">SEQUENCE</a>
+<li><a href="#SQL">SQL</a>
+<li><a href="#SCRIPT">SCRIPT</a>
+</ul>
+
+<a name="ACTIONS"><br><b> LIST OF ORDERED URLS TO TEST</b><br></a>
+<ul>
+<li><a href="#GET">GET</a>
+<li><a href="#POST">POST</a>
+<li><a href="#CHECKYES">CHECKYES</a>
+<li><a href="#CHECKNO">CHECKNO</a>
+<li><a href="#VAR">VAR</a>
+<li><a href="#SEQUENCE">SEQUENCE</a>
+<li><a href="#SQL">SQL</a>
+<li><a href="#SCRIPT">SCRIPT</a>
+<li><a href="#WRITETO">WRITETO</a>
+<li><a href="#WRITETOH">WRITETOH</a>
+</ul>
+
+<a name="AFTER"><br><b>LIST OF ACTIONS TO EXECUTE AFTER A TEST</b><br></a>
+<ul>
+<li>Same directives than for <a href="#BEFORE">LIST OF ACTIONS TO EXECUTE BEFORE A TEST</a> are available.<br>
+</ul>
+<br>
+
+
+<br><br><hr>
+
+<a name="OUTPUTDIR"><b>OUTPUTDIR</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+OUTPUTDIR="./myoutput"<br>
+<b>Examples : </b><br>
+OUTPUTDIR="./myoutput"<br>
+<b>Explanation : </b><br>
+This directive contains the name of directory where AWBot will<br>
+store all output files (results of tests).<br>
+
+<br><br><hr>
+
+<a name="SERVER"><b>SERVER</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+SERVER="/var/log/httpd/mylog.log"<br>
+<b>Examples : </b><br>
+SERVER="www.mysite.com"<br>
+SERVER="myintranetserver"<br>
+SERVER="127.0.0.1"<br>
+<b>Explanation : </b><br>
+This directive contains the name of server to test.<br>
+Note that this directive will be ignored if server name to test is provided on command line
+with -server option when launching AWBot.<br>
+
+<br><br><hr>
+
+<a name="USER"><b>USER</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+USER="username"<br>
+<b>Examples : </b><br>
+USER="john"<br>
+<b>Explanation : </b><br>
+This directive contains the name of the user to use to access pages that require a Basic HTTP authentication.<br>
+Note that this directive will be overwrited if user is provided on command line
+with -user option when launching AWBot.<br>
+
+
+<br><br><hr>
+
+<a name="PASSWORD"><b>PASSWORD</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+PASSWORD="password"<br>
+<b>Examples : </b><br>
+PASSWORD="a12QioP_e"<br>
+PASSWORD="$USER"<br>
+<b>Explanation : </b><br>
+This directive contains the name of the password to use to access pages that require a Basic HTTP authentication.<br>
+Note that this directive will be overwrited if password is provided on command line
+with -password option when launching AWBot.<br>
+
+<br><br><hr>
+
+<a name="BOTNAME"><b>BOTNAME</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+BOTNAME="bot name"<br>
+<b>Examples : </b><br>
+BOTNAME="AWBot"<br>
+<b>Explanation : </b><br>
+This directive contains the name of the User Agent that AWBot will use as its browser name.<br>
+This data might only appear is the web server log file.<br>
+
+<br><br><hr>
+
+<a name="DELAY"><b>DELAY</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+DELAY=d<br>
+<b>Examples : </b><br>
+DELAY=-1<br>
+DELAY=0<br>
+DELAY=5<br>
+<b>Explanation : </b><br>
+Between each URL request, you can ask AWBot to wait a certain number of time.
+Use this directive to give this time in number of seconds:<br>
+<li>d	Means AWBot will wait d seconds (after receiving a HTTP page) before sending next HTTP request.</li><br>
+<li>0   Means AWBot will never wait (There is always a running request).</li><br>
+<li>-1  Means AWBot will wait a key pressed on console that run the bot.</li><br>
+Note that this directive will be overwrited if delay is provided on command line
+with -delay option when launching AWBot.<br>
+
+<br><br><hr>
+
+<a name="MAXSIZE"><b>MAXSIZE</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+MAXSIZE=d<br>
+<b>Examples : </b><br>
+MAXSIZE=0<br>
+MAXSIZE=524288<br>
+<b>Explanation : </b><br>
+This directive is rarely used. If you really need to "cut" a HTTP page to its first MAXSIZE octets,
+you can set this parameter. In most cases, use MAXSIZE=0 to always get there entire page.<br>
+
+<br><br><hr>
+
+<a name="TIMEOUT"><b>TIMEOUT</b></a><br>
+<b>Version : </b>1.0 +<br>
+<b>Syntax : </b><br>
+TIMEOUT=d<br>
+<b>Examples : </b><br>
+TIMEOUT=120<br>
+<b>Explanation : </b><br>
+This directive contains the time-out used when AWbot is waiting a page after requesting a page.<br>
+This is a number of seconds. Traditionnal browsers have a such time-out set between 120 and 300.<br>
+
+
+
+
+<!-- -------------------------------------------------------------------------------------- -->
+
+<br><hr>
+
+<script language=javascript>
+	var lastmod = new Date(document.lastModified);
+	if (lastmod.getDate() > 0) {
+		if (lastmod.getDate()<10) zerod="0"
+		else zerod="";
+		if (lastmod.getMonth()<9) zerom="0"
+		else zerom=""
+		year2kok=lastmod.getYear();
+		if (year2kok<100) year2kok+=2000;
+		if ((year2kok>=100) && (year2kok < 1970)) year2kok+=1900;
+		document.writeln("Last revision: "+year2kok+"-"+zerom+(lastmod.getMonth()+1)+"-"+zerod+lastmod.getDate());
+	}
+</script>
+
+</body>
+</html>

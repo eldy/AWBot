@@ -1,0 +1,5 @@
+# French message file
+teststart=ucfirst($PROG)." $VERSION demarre pour le fichier de config/test $ConfigFile"
+waitkey="Taper une touche pour envoyer la prochaine requete HTTP"
+testend="Test termine. Les resultats sont disponibles dans le fichier $OutputFile"
+prepareend="Actions de preparation effectuees. Les resultats sont disponibles dans le fichier $OutputFile"

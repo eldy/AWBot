@@ -1,0 +1,5 @@
+# English message file
+teststart=ucfirst($PROG)." $VERSION started for config/test file $ConfigFile"
+waitkey="Press a key to start next HTTP request"
+testend="Test finished. Results are available in file $OutputFile"
+prepareend="Prepare actions done. Results are available in file $OutputFile"
