@@ -424,6 +424,7 @@ sub restore_sequence {
 # Return:		O Error, 1 OK, 2 Need a redirection
 # Input var:	$HTTPcookie $HTTPheader $HTTPua
 # Output var:	$HTTPResponse=Long string with all HTML code content
+#               $HTTPResponseWithHeader=Long string with all HTTP code content
 #------------------------------------------------------------------------------
 sub Get_Page()
 {
@@ -472,12 +473,12 @@ sub Get_Page()
 	if ($response->is_error())
 	{
 		$response->error_as_HTML();
-		$HTTPResponse=$response->status_line;
+		$HTTPResponseWithHeader=$HTTPResponse=$response->status_line;
 		#$HTTPResponse =~ s/[\r\n]+//g;
 		return 0;
 	}
-	$HTTPResponseWithHeader = $response->as_string();
-	$HTTPResponse = $response->content();
+	$HTTPResponseWithHeader=$response->as_string();
+	$HTTPResponse=$response->content();
 	#$HTTPResponse =~ s/[\r\n]+//g;
 	return 1;
 }
