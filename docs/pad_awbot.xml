@@ -75,10 +75,14 @@
 <English>
         <Keywords>awbot</Keywords>
         <Char_Desc_45>AWBot - Advanced Web Bot (GPL)</Char_Desc_45>
-        <Char_Desc_80>AWBot - Advanced Web Bot (GPL)</Char_Desc_80>
-        <Char_Desc_250>AWBot - Advanced Web Bot (GPL)</Char_Desc_250>
-        <Char_Desc_450>AWBot - Advanced Web Bot (GPL)</Char_Desc_450>
-        <Char_Desc_2000>AWBot - Advanced Web Bot (GPL)</Char_Desc_2000>
+        <Char_Desc_80>AWBot - An easy to use Perl tool to test a web site (GPL)</Char_Desc_80>
+        <Char_Desc_250>AWBot - An easy to use Perl tool to test a web site (GPL)</Char_Desc_250>
+        <Char_Desc_450>AWBot - An easy to use Perl tool to test a web site (GPL)</Char_Desc_450>
+        <Char_Desc_2000>AWbot connects to your web site and make URL requests like any other visitors.
+AWBot is not a web indexing robot but a web client tool that emulate some visitors browsing on your web site to test its stability after a development change, to test its reliability and/or response to heavy load.
+You choose which pages you want to test in a test/config file (parameters in URLs or forms can be easily supplied).
+Then you can launch AWbot as often as you want to test your site, get benchmarks information or make some load benchmarking (AWBot can be launched with several simultaneous process).
+AWBot is GPL.</Char_Desc_2000>
 </English>
 </Program_Descriptions>
 <Web_Info>
@@ -87,7 +91,7 @@
         <Application_Order_URL>http://awbot.sourceforge.net</Application_Order_URL>
         <Application_Screenshot_URL>http://awbot.sourceforge.net/docs/images/screen_shot_1.jpg</Application_Screenshot_URL>
         <Application_Icon_URL>http://awbot.sourceforge.net/docs/images/awbot_logo1.gif</Application_Icon_URL>
-        <Application_XML_File_URL>http://awbot.sourceforge.net/docs/awbot.xml</Application_XML_File_URL>
+        <Application_XML_File_URL>http://awbot.sourceforge.net/docs/pad_awbot.xml</Application_XML_File_URL>
     </Application_URLs>
 <Download_URLs>
         <Primary_Download_URL>http://awbot.sourceforge.net/files/awbot.tgz</Primary_Download_URL>
