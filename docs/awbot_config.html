@@ -62,41 +62,44 @@ explained in this page.<br>
 
 
 
-# INIT PARAMETERS
+# INIT PARAMETERS SECTION
 #-----------------------------------------------------------------------------
-# Put here all global parameters of your test configuration 
+# Put here all global parameters of your test configuration.
 #
 # Examples:
-#  PASSWORD=$USER
+#  OUTPUTDIR="/myoutputdir"
 #-----------------------------------------------------------------------------
-OUTPUTDIR = "./output"      # Directory where to store output file(s)
-SERVER = "www.mysite.com"   # Domain name of server to test (www.mysite.com)
-USER = "test"               # If your web application require an authentication, this is the login that awbot will use
-PASSWORD = "test"           # If your web application require an authentication, this is the password that awbot will use
-BOTNAME = "AWBot"           # String value to force bot name used in the user agent string
-DELAY = 0                   # Delay beetween each HTTP request (-1 wait a key, 0 no delay, n number of seconds)
-MAXSIZE = 0                 # Maximum size of HTTP response (0 = no limit)
-TIMEOUT = 120               # Timeout (when waiting for a server response after sending a request)
-LANG = "fr"                 # Choose output language
+OUTPUTDIR = "./output"		# Directory where to store result output file(s)
+
+SERVER = "www.mysite.com"	# Domain name of main server to test (www.mysite.com)
+#USER = "test"				# If your web application require a Basic authentication, this is the login that awbot will use for this test session
+#PASSWORD = "test"			# If your web application require a Basic authentication, this is the password that awbot will use for this test session
+#PROXYSERVER = "http://my.proxy.server:port/"	# If the web application to test is after a proxy
+
+BOTNAME = "AWBot"			# String value to force bot name used in the user agent string
+DELAY = 0					# Delay beetween each HTTP request (-1 wait a key, 0 no delay, n number of seconds)
+MAXSIZE = 0					# Maximum size of HTTP response (0 = no limit)
+TIMEOUT = 120				# Timeout (when waiting for a server response after sending a request)
+LANG = "fr"					# Choose output language
 
 
 
-# DATABASE PARAMETERS
+# DATABASE PARAMETERS SECTION
 #-----------------------------------------------------------------------------
-# This section is required only if you added SQL request in your actions (see later)
+# This section is required only if you added SQL requests in your ACTIONS section (see later)
 #
 # Examples:
 #  BASEENGINE="mysql"
 #  USERBASE=($USER eq "toto"?"titi":$USER)
 #-----------------------------------------------------------------------------
-BASEENGINE = "Oracle"           # Here is the name of the perl DBD driver (mysql, ODBC, Oracle, Sybase...)
-DSN = "mybase"                  # Database name
-USERBASE = "myuser"             # Database login
-PASSWORDBASE = "mypassword"     # Database password
+#BASEENGINE = "Oracle"			# Here is the name of the perl DBD driver (mysql, ODBC, Oracle, Sybase...)
+#DSN = "mybase"					# Database name
+#USERBASE = "myuser"			# Database login
+#PASSWORDBASE = "mypassword"	# Database password
 
 
 
-# OTHER PARAMETERS
+# OTHER PARAMETERS SECTION
 #-----------------------------------------------------------------------------
 # You can add here as many parameters as you need for rest of config file.
 # Just use the following syntax (where n is a number between 1 and 99):
@@ -183,6 +186,7 @@ GET "http://$SERVER/"
 <li><a href="#SERVER">SERVER</a>
 <li><a href="#USER">USER</a>
 <li><a href="#PASSWORD">PASSWORD</a>
+<li><a href="#PROXYSERVER">PROXYSERVER</a>
 <li><a href="#BOTNAME">BOTNAME</a>
 <li><a href="#DELAY">DELAY</a>
 <li><a href="#MAXSIZE">MAXSIZE</a>
@@ -288,6 +292,17 @@ PASSWORD="$USER"<br>
 This directive contains the name of the password to use to access pages that require a Basic HTTP authentication.<br>
 Note that this directive will be overwrited if password is provided on command line
 with -password option when launching AWBot.<br>
+
+<br><hr>
+
+<a name="PROXYSERVER"><b>PROXYSERVER</b></a><br>
+<b>Version : </b>1.1 +<br>
+<b>Syntax : </b><br>
+PROXYSERVER="http://my.proxy.server:port/"<br>
+<b>Examples : </b><br>
+PROXYSERVER="http://myproxy.server:8080/"<br>
+<b>Explanation : </b><br>
+If the web application to test is after a proxy.<br>
 
 <br><hr>
 

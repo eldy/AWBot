@@ -1,14 +1,21 @@
 AWBot Changelog
 ---------------
 
+1.1
+
+Added:
+- New parameter: PROXYSERVER
+
+
+
 1.0
 
 - First version
-	* Easy to use (create one config/test file) and run (an "auto" mode for sites with no forms soon available).
-	* Support sites requiring Basic HTTP authentication.
-	* Can make different pre-post tasks before-after a test (external script, SQL commands...).
-	* Can check each HTML page resulting of HTTP requests to verify if contents contains/does not contains particular keywords or to extract values.
-	* URL or params to use in test can be dynamically defined (using values catched from previous page).
-	* A multi-session test launcher to run several simultaneous tests for load benchmarking.
-	* Report errors, response time for each page and average response time.
-	* A lot of other features to match your test needs.
+* Easy to use (create one config/test file) and run (an "auto" mode for sites with no forms soon available).
+* Support sites requiring Basic HTTP authentication.
+* Can make different pre-post tasks before-after a test (external script, SQL commands...).
+* Can check each HTML page resulting of HTTP requests to verify if contents contains/does not contains particular keywords or to extract values.
+* URL or params to use in test can be dynamically defined (using values catched from previous page).
+* A multi-session test launcher to run several simultaneous tests for load benchmarking.
+* Report errors, response time for each page and average response time.
+* A lot of other features to match your test needs.

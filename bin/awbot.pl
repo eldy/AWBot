@@ -4,7 +4,7 @@
 # Description: Web visitor robot for web application testing or benchmark analysis
 # Required modules:
 # Time::HiRes, LWP::UserAgent, HTTP::Cookies, HTTP::Headers, HTTP::Request
-# DBI, DBD:xxx where xxx is your database engine
+# DBI, DBD:xxx where xxx is your database engine (if you use one)
 #-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
@@ -32,7 +32,7 @@ use HTTP::Request;
 #-----------------------------------------------------------------------------
 use vars qw/ $REVISION $VERSION /;
 my $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
-my $VERSION="1.0 (build $REVISION)";
+my $VERSION="1.1 (build $REVISION)";
 
 my $DEBUGFORCED=0;				# Force debug level to log lesser level into debug.log file (Keep this value to 0)
 my $nowtime = my $nowweekofmonth = my $nowdaymod = my $nowsmallyear = 0;
