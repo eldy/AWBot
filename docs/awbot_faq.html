@@ -39,6 +39,7 @@
 <ul>
 FAQ-ABO100 <a href="#SERVERSOS">Which web servers or operating systems are supported ?</a><br>
 FAQ-ABO200 <a href="#LANG">Which languages are available ?</a><br>
+FAQ-ABO300 <a href="#SSL">Can I user AWBot on https sites ?</a><br>
 </ul>
 <br>
 
@@ -64,7 +65,7 @@ Here, you can find the most common questions and answers users have when using A
 AWBot is just a particular Web Browser like IE or Netscape so it can test/works on all web servers.
 Because AWBot is in Perl, it can works on all Operating Systems.<br>
 Examples of used platforms (bold means 'tested by author', others were reported by AWBot users to work correctly) :<br>
-<table bgcolor=#F0F0F0 width="100%" class=CFAQ><tr class=CFAQ><td class=CFAQ>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
 <u>OS:</u><br>
 <b>Windows NT 4.0</b>, <b>Windows 2000</b>, Windows Me, <b>Linux</b>, Macintosh, <b>Solaris</b>, <b>Aix</b>, BeOS, ...<br>
 <u>Web/Wap/Proxy servers</u><br>
@@ -80,6 +81,25 @@ AWBot is only available in English.<br>
 <br>
 
 
+<a name="SSL"></a><br>
+<b><u>FAQ-ABO300 : CAN I USE AWBOT ON HTTPS SITES ?</u></b><br>
+In most cases, you can use https urls like you use http url in your AWBot config file.
+If it doesn't work, it probably means that Perl module Crypt-SSLeay is not installed.
+So this is how you can use AWBot to test an https url:<br>
+- Check that Crypt-SSLeay Perl package is installed.<br>
+If not, you can find it on <a href="http://www.cpan.org">CPAN<a> or
+if you are using ActiveState, you can install it with the following commands:<br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
+> ppm rep add Theory http://theoryx5.uwinnipeg.ca/ppmpackages/<br>
+> install Crypt-SSLeay<br>
+</td></tr></table>
+- Add in your config file an entry GET or POST that contains an url starting with https instead
+of http:<br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
+GET "https://$SERVER/mypage.html"
+</td></tr></table>
+<br>
+
 <hr><br>
 
 
@@ -93,17 +113,25 @@ accross time. How can I do this ?<br>
 The use of this tool is not an AWBot related problem, so please take a look at your Windows manual.
 Warning, if you use <i>"awbot.pl -config=myfile.conf"</i> in your scheduled task, you might
 experience problem of failing task. Try this instead<br>
-<i>"C:\WINNT\system32\CMD.EXE /C C:\[AWBot_path]\awbot.pl -config=myfile.conf"</i><br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
+"C:\WINNT\system32\CMD.EXE /C C:\[AWBot_path]\awbot.pl -config=myfile.conf"
+</td></tr></table>
 or<br>
-<i>"C:\[perl_path]\perl.exe C:\[AWBot_path]\awbot.pl -config=myfile.conf"</i><br>
-A lot of other scheduler (sharewares/freewares) are very good.<br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
+"C:\[perl_path]\perl.exe C:\[AWBot_path]\awbot.pl -config=myfile.conf"
+</td></tr></table>
+A lot of other open-source schedulers (avoid sharewares or freewares) are very good.<br>
 <br>
 <u>With unix-like operating systems</u>, you can use the "<b>crontab</b>".<br>
 This is examples of lines you can add in the cron file (see your unix reference manual for cron) :<br>
 To run update every day at 04:00, use :<br>
-<i>0 4 * * * /opt/awbot/wwwroot/cgi-bin/awbot.pl -config=myfile.conf</i><br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
+0 4 * * * /opt/awbot/wwwroot/cgi-bin/awbot.pl -config=myfile.conf
+</td></tr></table>
 To run update every hour, use :<br>
-<i>0 * * * * /opt/awbot/wwwroot/cgi-bin/awbot.pl -config=myfile.conf</i><br>
+<table width="95%" border=1 cellpadding=0 cellspacing=0 bgcolor=#F4F4F4 class=CFAQ><tr class=CFAQ><td class=CFAQ>
+0 * * * * /opt/awbot/wwwroot/cgi-bin/awbot.pl -config=myfile.conf
+</td></tr></table>
 <br>
 
 <br>
