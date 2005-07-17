@@ -742,6 +742,11 @@ sub LoopOnActionArray {
 		# Write last result if action is WRITETO or WRITETOH
 		if ($ActionsTypeArray[$actionnb] =~ /writeto/i) {
 			my $file=eval($ActionsValueArray[$actionnb]);
+            if (! $file) {
+				&WriteOutput("---> Error: Can't open file \"$file\" for writing like required by action number $actionnb \"$ActionsTypeArray[$actionnb]\"",$level);
+				if (! $NoStopIfError) { last; }
+				next;
+            }
 			if ($ID) { $file.=".$$"; }
 			if ($ActionsTypeArray[$actionnb] =~ /writetoh/i) {
 				debug("Write last output with HTTP header to file \"$file\"",3);
@@ -1087,6 +1092,7 @@ elsif (! $Silent) { print "$Message{'teststart'}\n"; }
 
 &WriteOutput("TEST $PROG $VERSION");
 &WriteOutput("---------------------------");
+&WriteOutput("Perl version: $^X $]");
 &WriteOutput("Config file: $ConfigFile");
 &WriteOutput("Server: $SERVER - User: $USER - Delay: $DELAY");
 &WriteOutput("Botname: $BotName - TimeOut: $TIMEOUT - MaxSize: $MaxSize");
