@@ -8,7 +8,7 @@
 #-----------------------------------------------------------------------------
 # $Revision$ - $Author$ - $Date$
 
-use strict; no strict "refs";
+#use strict; no strict "refs";
 $|=1;		# Force flush of disk writing
 
 use Time::HiRes qw( gettimeofday tv_interval );
@@ -302,7 +302,7 @@ sub Read_Config_File
 		if ($ACTIONSPHASE)
 		{
 			# 	
-			my @array=split(/[\s,]+/,"$line");
+			my @array=split(/\s+/,"$line");
 			my $arraycursor=0;
 			while ($array[$arraycursor]) {
 				#my $actionnb=sprintf("%05d",$ACTIONSPHASE);
