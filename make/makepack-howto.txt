@@ -1,0 +1,9 @@
+***** Actions to do to release *****
+- Update file README.txt
+- Build PAD files
+- Tag CVS sources
+
+- makepack.pl
+- Move files in files
+- Upload files
+- Send mail on mailing list
