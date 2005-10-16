@@ -17,8 +17,8 @@ support
 
 License: GNU GPL (GNU General Public License. See LICENSE file)
 Version : 1.1
-Release date: June 2003
-Platforms: All (Linux, NT, SCO, BSD, Solaris and other *NIX's, BeOS, OS/2...)
+Release date: October 2005
+Platforms: All (Linux, BSD, Solaris and other *NIX's, NT, BeOS, OS/2...)
 Author: Laurent Destailleur <eldy@users.sourceforge.net>
 AWBot official web site and latest version: http://awbot.sourceforge.net
 
@@ -37,6 +37,7 @@ I - FEATURES AND REQUIREMENTS
 I - 1) Features
 
 	* Support sites requiring Basic HTTP authentication.
+	* Support HTTPS web sites.
 	* Can make different pre-post tasks before-after a test (external script, SQL commands...).
 	* Can check each HTML page resulting of HTTP requests to verify if contents contains/does not contains particular keywords or to extract values.
 	* URL or params to use in test can be dynamically defined (using values catched from previous page).
@@ -83,7 +84,7 @@ http://awbot.sourceforge.net
 
 III - ABOUT THE AUTHOR, LICENSE AND SUPPORT
 -------------------------------------------
-Copyright (C) 2000-2001 - Laurent Destailleur - eldy@users.sourceforge.net
+Copyright (C) 2000-2005 - Laurent Destailleur - eldy@users.sourceforge.net
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
