@@ -1,4 +1,5 @@
 ***** Actions to do to release *****
+- Check all files are commited
 - Update file README.txt
 - Build PAD files
 - Tag CVS sources
