@@ -39,6 +39,10 @@ if (-d "/usr/src/RPM") {
     # mandrake
     $RPMDIR="/usr/src/RPM";
 }
+if (-d "/usr/src/rpm") {
+    # ubuntu
+    $RPMDIR="/usr/src/rpm";
+}
 use vars qw/ $REVISION $VERSION /;
 $REVISION='$Revision$'; $REVISION =~ /\s(.*)\s/; $REVISION=$1;
 $VERSION="1.0 (build $REVISION)";
