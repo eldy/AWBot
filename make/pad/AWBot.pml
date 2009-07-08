@@ -61,7 +61,7 @@ AWBot is GPL.</Char_Desc_2000>
 		<Application_URLs>
 			<Application_Info_URL>http://awbot.sourceforge.net</Application_Info_URL>
 			<Application_Order_URL>http://awbot.sourceforge.net</Application_Order_URL>
-			<Application_Screenshot_URL>http://awbot.sourceforge.net/docs/images/screen_shot_1.jpg</Application_Screenshot_URL>
+			<Application_Screenshot_URL />
 			<Application_Icon_URL>http://awbot.sourceforge.net/docs/images/awbot.gif</Application_Icon_URL>
 			<Application_XML_File_URL>http://awbot.sourceforge.net/docs/pad_awbot.xml</Application_XML_File_URL>
 		</Application_URLs>
