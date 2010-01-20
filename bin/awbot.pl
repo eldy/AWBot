@@ -729,10 +729,10 @@ sub RunScript {
 # Output var:	-
 #--------------------------------------------------------------------
 sub LoopOnActionArray {
-	my $refarray=shift;
-	my @ActionsTypeArray=@$refarray;
-	my $refarray=shift;
-	my @ActionsValueArray=@$refarray;
+	my $refarraya=shift;
+	my @ActionsTypeArray=@$refarraya;
+	my $refarrayb=shift;
+	my @ActionsValueArray=@$refarrayb;
 	my $level=shift||0;
 	my $levelmax=shift||0;
 
