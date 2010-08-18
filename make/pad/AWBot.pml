@@ -48,14 +48,6 @@ You choose which pages you want to test in a test/config file (parameters in URL
 Then you can launch AWbot as often as you want to test your site, get benchmarks information or make some load benchmarking (AWBot can be launched with several simultaneous process).
 AWBot is GPL.</Char_Desc_2000>
 		</English>
-		<French>
-			<Keywords />
-			<Char_Desc_45 />
-			<Char_Desc_80 />
-			<Char_Desc_250 />
-			<Char_Desc_450 />
-			<Char_Desc_2000 />
-		</French>
 	</Program_Descriptions>
 	<Web_Info>
 		<Application_URLs>
