@@ -121,7 +121,7 @@ while (! $found) {
 		printf(" %d - %3s    (%s)\n",$cpt,$target,"Need ".$REQUIREMENTTARGET{$target});
 	}
 
-	# On demande de choisir le fichier à passer
+	# On demande de choisir le fichier a passer
 	print "Choose one package number or several separated with space: ";
 	$NUM_SCRIPT=<STDIN>; 
 	chomp($NUM_SCRIPT);
@@ -248,7 +248,7 @@ rename("$BUILDROOT/$PROJECT","$BUILDROOT/$FILENAMETGZ");
     	if ($target eq 'TGZ') {
     		unlink $FILENAMETGZ.tgz;
     		print "Compress $FILENAMETGZ into $FILENAMETGZ.tar.gz\n";
-    		$ret=`tar --directory="$BUILDROOT" --mode=go-w -czvf $FILENAMETGZ.tar.gz $FILENAMETGZ`;
+    		$ret=`tar --directory="$BUILDROOT" --mode=go-w --group=500 --owner=500 -czvf $FILENAMETGZ.tar.gz $FILENAMETGZ`;
     		print "Move $FILENAMETGZ.tar.gz to $DESTI\n";
     		rename("$FILENAMETGZ.tar.gz","$DESTI/$FILENAMETGZ.tar.gz");
     		next;
