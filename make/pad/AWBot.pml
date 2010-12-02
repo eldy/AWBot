@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <PADGEN_PML>
-	<AppVerInfo>PADGen 3.0.1.35</AppVerInfo>
+	<AppVerInfo>PADGen 3.1.1.47</AppVerInfo>
 	<CompanyName />
 	<Program_Info>
 		<Program_Name>AWBot</Program_Name>
@@ -14,7 +14,7 @@
 		<Program_Type>Freeware</Program_Type>
 		<Program_Release_Status>Minor Update</Program_Release_Status>
 		<Program_Install_Support>No Install Support</Program_Install_Support>
-		<Program_OS_Support>Win95,Win98,WinME,WinNT 4.x,Windows2000,WinXP,Unix,Linux,OS/2,OS/2 Warp,OS/2 Warp 4,MAC 68k,Mac PPC</Program_OS_Support>
+		<Program_OS_Support>Linux,Mac Other,Unix,Win2000,Win98,WinOther,WinXP,Other</Program_OS_Support>
 		<Program_Language>English,Chinese,ChineseSimplified,ChineseTraditional,French,German,Italian,Japanese,Russian,Spanish</Program_Language>
 		<Program_Change_Info />
 		<Program_Specific_Category>Internet</Program_Specific_Category>
@@ -37,15 +37,15 @@
 	</Program_Info>
 	<Program_Descriptions>
 		<English>
-			<Keywords>awbot</Keywords>
+			<Keywords>awbot, perl, tool, web, test, perf</Keywords>
 			<Char_Desc_45>AWBot - Advanced Web Bot (GPL)</Char_Desc_45>
 			<Char_Desc_80>AWBot - An easy to use Perl tool to test a web site (GPL)</Char_Desc_80>
 			<Char_Desc_250>AWBot - An easy to use Perl tool to test a web site (GPL)</Char_Desc_250>
 			<Char_Desc_450>AWBot - An easy to use Perl tool to test a web site (GPL)</Char_Desc_450>
-			<Char_Desc_2000>AWbot connects to your web site and make URL requests like any other visitors.
-AWBot is not a web indexing robot but a web client tool that emulate some visitors browsing on your web site to test its stability after a development change, to test its reliability and/or response to heavy load.
-You choose which pages you want to test in a test/config file (parameters in URLs or forms can be easily supplied).
-Then you can launch AWbot as often as you want to test your site, get benchmarks information or make some load benchmarking (AWBot can be launched with several simultaneous process).
+			<Char_Desc_2000>AWbot connects to your web site and make URL requests like any other visitors.
+AWBot is not a web indexing robot but a web client tool that emulate some visitors browsing on your web site to test its stability after a development change, to test its reliability and/or response to heavy load.
+You choose which pages you want to test in a test/config file (parameters in URLs or forms can be easily supplied).
+Then you can launch AWbot as often as you want to test your site, get benchmarks information or make some load benchmarking (AWBot can be launched with several simultaneous process).
 AWBot is GPL.</Char_Desc_2000>
 		</English>
 	</Program_Descriptions>
@@ -75,8 +75,8 @@ AWBot is GPL.</Char_Desc_2000>
 	</ASP>
 	<Affiliates>
 		<Affiliates_FORM>Y</Affiliates_FORM>
-		<Affiliates_VERSION>1.2</Affiliates_VERSION>
-		<Affiliates_URL>http://www.asp-shareware.org/pad/extensions/Affiliates.htm</Affiliates_URL>
+		<Affiliates_VERSION>1.4</Affiliates_VERSION>
+		<Affiliates_URL>http://pad.asp-software.org/extensions/Affiliates.htm</Affiliates_URL>
 		<Affiliates_Information_Page />
 		<Affiliates_Avangate_Order_Page />
 		<Affiliates_Avangate_Vendor_ID />
@@ -86,6 +86,10 @@ AWBot is GPL.</Char_Desc_2000>
 		<Affiliates_BMTMicro_Vendor_ID />
 		<Affiliates_BMTMicro_Product_ID />
 		<Affiliates_BMTMicro_Maximum_Commission_Rate />
+		<Affiliates_Cleverbridge_Order_Page />
+		<Affiliates_Cleverbridge_Vendor_ID />
+		<Affiliates_Cleverbridge_Product_ID />
+		<Affiliates_Cleverbridge_Maximum_Commission_Rate />
 		<Affiliates_clixGalore_Order_Page />
 		<Affiliates_clixGalore_Vendor_ID />
 		<Affiliates_clixGalore_Product_ID />
@@ -122,6 +126,10 @@ AWBot is GPL.</Char_Desc_2000>
 		<Affiliates_NorthStarSol_Vendor_ID />
 		<Affiliates_NorthStarSol_Product_ID />
 		<Affiliates_NorthStarSol_Maximum_Commission_Rate />
+		<Affiliates_OneNetworkDirect_Order_Page />
+		<Affiliates_OneNetworkDirect_Vendor_ID />
+		<Affiliates_OneNetworkDirect_Product_ID />
+		<Affiliates_OneNetworkDirect_Maximum_Commission_Rate />
 		<Affiliates_Order1_Order_Page />
 		<Affiliates_Order1_Vendor_ID />
 		<Affiliates_Order1_Product_ID />
