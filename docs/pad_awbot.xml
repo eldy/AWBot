@@ -6,26 +6,26 @@
 		<MASTER_PAD_INFO>Portable Application Description, or PAD for short, is a data set that is used by shareware authors to disseminate information to anyone interested in their software products. To find out more go to http://pad.asp-software.org</MASTER_PAD_INFO>
 	</MASTER_PAD_VERSION_INFO>
 	<Company_Info>
-		<Company_Name>Dolibarr team</Company_Name>
-		<Address_1>61 Boulevard Vauban</Address_1>
+		<Company_Name>NLTechno</Company_Name>
+		<Address_1>11 Rue raymond Queneau</Address_1>
 		<Address_2 />
-		<City_Town>Montigny-le-Bretonneux</City_Town>
+		<City_Town>Rueil Malmaison</City_Town>
 		<State_Province />
-		<Zip_Postal_Code>78180</Zip_Postal_Code>
+		<Zip_Postal_Code>92500</Zip_Postal_Code>
 		<Country>FRANCE</Country>
-		<Company_WebSite_URL>http://www.dolibarr.org</Company_WebSite_URL>
+		<Company_WebSite_URL>http://www.nltechno.com</Company_WebSite_URL>
 		<Contact_Info>
-			<Author_First_Name>Dolibarr team</Author_First_Name>
-			<Author_Last_Name>Dolibarr team</Author_Last_Name>
-			<Author_Email>dolibarr-dev@nongnu.org</Author_Email>
-			<Contact_First_Name>Dolibarr team</Contact_First_Name>
-			<Contact_Last_Name>Dolibarr team</Contact_Last_Name>
-			<Contact_Email>dolibarr-dev@nongnu.org</Contact_Email>
+			<Author_First_Name>NLTechno</Author_First_Name>
+			<Author_Last_Name>NLTechno</Author_Last_Name>
+			<Author_Email>dolibarr@nltechno.com</Author_Email>
+			<Contact_First_Name>NLTechno</Contact_First_Name>
+			<Contact_Last_Name>NLTechno</Contact_Last_Name>
+			<Contact_Email>dolibarr@nltechno.com</Contact_Email>
 		</Contact_Info>
 		<Support_Info>
-			<Sales_Email>dolibarr-dev@nongnu.org</Sales_Email>
-			<Support_Email>dolibarr-dev@nongnu.org</Support_Email>
-			<General_Email>dolibarr-dev@nongnu.org</General_Email>
+			<Sales_Email>dolibarr@nltechno.com</Sales_Email>
+			<Support_Email>dolibarr@nltechno.com</Support_Email>
+			<General_Email>dolibarr@nltechno.com</General_Email>
 			<Sales_Phone />
 			<Support_Phone />
 			<General_Phone />
@@ -82,6 +82,22 @@ Then you can launch AWbot as often as you want to test your site, get benchmarks
 
 AWBot is GPL.</Char_Desc_2000>
 		</English>
+		<French>
+			<Keywords />
+			<Char_Desc_45 />
+			<Char_Desc_80 />
+			<Char_Desc_250 />
+			<Char_Desc_450 />
+			<Char_Desc_2000 />
+		</French>
+		<Italian>
+			<Keywords />
+			<Char_Desc_45 />
+			<Char_Desc_80 />
+			<Char_Desc_250 />
+			<Char_Desc_450 />
+			<Char_Desc_2000 />
+		</Italian>
 	</Program_Descriptions>
 	<Web_Info>
 		<Application_URLs>
